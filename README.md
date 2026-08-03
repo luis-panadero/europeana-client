@@ -2,17 +2,18 @@
 
 This project implements a java client for the Europeana Search Api.
 
-The project was forked from Europeana4J (http://code.google.com/p/europeana4j/) and (https://github.com/baratz-es/europeana4j) mavenized and refactored.
+The project was forked from Europeana4J (http://code.google.com/p/europeana4j/) / (https://github.com/baratz-es/europeana4j) mavenized and refactored.
 
 ### How run tests
 
 ```sh
 cp src/main/resources/europeana-client.properties.template src/test/resources/europeana-client.properties
 ```
-Edit it and put a valid APIKEY
+Edit it and put a valid APIKEY.
+
 Run `mvn clean verify`
 
-### Loading in Eclipse workspace ======
+### Loading in Eclipse workspace
 
 git clone ....
 
