@@ -51,7 +51,13 @@ public class DownloadThumbnailsIT extends
 
 
 	protected File getDatasetImageFolder() {
-		return new File(getConfiguration().getImageFolder(getDataset()));		
+		File folder = new File(System.getProperty("java.io.tmpdir"),
+				"europeana-client" + File.separator + getDataset() + File.separator + "images");
+		if (!folder.exists() && !folder.mkdirs()) {
+			throw new IllegalStateException(
+					"Cannot create download folder: " + folder.getAbsolutePath());
+		}
+		return folder;
 	}
 
 
