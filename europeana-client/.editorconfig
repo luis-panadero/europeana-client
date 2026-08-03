@@ -1,0 +1,27 @@
+# top-most EditorConfig file
+root = true
+
+[*]
+end_of_line = crlf
+insert_final_newline = true
+
+[*.{java,groovy,xml,ftl,vm}]
+indent_style = space
+indent_size = 4
+
+[*.{js,css,less,scss}]
+indent_style = space
+indent_size = 2
+
+[*.{sh,yml,json}]
+end_of_line = lf
+
+#Charsets
+[Jenkinsfile*]
+charset = utf-8
+
+[*.{java,groovy,js,scss,sh,yml}]
+charset = utf-8
+
+[*.{vm,sql,properties}]
+charset = latin1

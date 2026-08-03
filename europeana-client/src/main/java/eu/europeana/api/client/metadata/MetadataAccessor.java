@@ -9,8 +9,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import eu.europeana.api.client.EuropeanaApi2Client;
 import eu.europeana.api.client.config.ClientConfiguration;
@@ -27,7 +27,7 @@ import eu.europeana.api.client.thumbnails.ThumbnailsAccessor;
 
 public class MetadataAccessor {
 
-	protected static final Log log = LogFactory.getLog(ThumbnailsAccessor.class);
+	protected static final Logger log = LoggerFactory.getLogger(ThumbnailsAccessor.class);
 	protected HttpConnector http = new HttpConnector();
 	protected EuropeanaApi2Client europeanaClient;
 	private boolean skipExistingFiles = true;

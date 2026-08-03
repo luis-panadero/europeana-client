@@ -8,15 +8,28 @@ package eu.europeana.api.client.connection;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.params.HttpMethodParams;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpRequestRetryHandler;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A HttpConnector is a class encapsulating simple HTTP access.
@@ -31,21 +44,20 @@ public class HttpConnector {
     private static final int STATUS_OK_START = 200;
     private static final int STATUS_OK_END = 299;
     private static final String ENCODING = "UTF-8";
-    private HttpClient httpClient = null;
+    private CloseableHttpClient httpClient = null;
 
-    private static final Log log = LogFactory.getLog(HttpConnector.class);
+    private static final Logger log = LoggerFactory.getLogger(HttpConnector.class);
 	
     public String getURLContent(String url) throws IOException {
-        HttpClient client = this.getHttpClient(CONNECTION_RETRIES, TIMEOUT_CONNECTION);
-        GetMethod getRequest = new GetMethod(url);
+        CloseableHttpClient client = this.getHttpClient(CONNECTION_RETRIES, TIMEOUT_CONNECTION);
+        HttpGet getRequest = new HttpGet(url);
 
-        try {
-            client.executeMethod(getRequest);
-            byte[] byteResponse = getRequest.getResponseBody();
-            return new String(byteResponse, ENCODING);
-
-        } finally {
-            getRequest.releaseConnection();
+        try (CloseableHttpResponse response = client.execute(getRequest)) {
+            HttpEntity entity = response.getEntity();
+            if (entity == null) {
+                return "";
+            }
+            return EntityUtils.toString(entity, ENCODING);
         }
     }
 
@@ -54,36 +66,35 @@ public class HttpConnector {
     }
 
     public boolean writeURLContent(String url, OutputStream out, String requiredMime) throws IOException {
-        HttpClient client = this.getHttpClient(CONNECTION_RETRIES, TIMEOUT_CONNECTION);
-        GetMethod getMethod = new GetMethod(url);
-        try {
-            client.executeMethod(getMethod);
+        CloseableHttpClient client = this.getHttpClient(CONNECTION_RETRIES, TIMEOUT_CONNECTION);
+        HttpGet getRequest = new HttpGet(url);
+        try (CloseableHttpResponse response = client.execute(getRequest)) {
+            int statusCode = response.getStatusLine().getStatusCode();
 
-            Header tipoMimeHead = getMethod.getResponseHeader("Content-Type");
-            String tipoMimeResp = "";
-            if (tipoMimeHead != null) {
-                tipoMimeResp = tipoMimeHead.getValue();
+            Header contentTypeHeader = response.getFirstHeader("Content-Type");
+            String contentType = "";
+            if (contentTypeHeader != null) {
+                contentType = contentTypeHeader.getValue();
             }
 
-            if (getMethod.getStatusCode() >= STATUS_OK_START && getMethod.getStatusCode() <= STATUS_OK_END
-                    && ((requiredMime == null) || ((tipoMimeResp != null) && tipoMimeResp.contains(requiredMime)))) {
-                InputStream in = getMethod.getResponseBodyAsStream();
-
-                // Copy input stream to output stream
-                byte[] b = new byte[4 * 1024];
-                int read;
-                while ((read = in.read(b)) != -1) {
-                    out.write(b, 0, read);
+            if (statusCode >= STATUS_OK_START && statusCode <= STATUS_OK_END
+                    && ((requiredMime == null) || ((contentType != null) && contentType.contains(requiredMime)))) {
+                HttpEntity entity = response.getEntity();
+                if (entity == null) {
+                    return false;
                 }
-
-                getMethod.releaseConnection();
+                try (InputStream in = entity.getContent()) {
+                    byte[] b = new byte[4 * 1024];
+                    int read;
+                    while ((read = in.read(b)) != -1) {
+                        out.write(b, 0, read);
+                    }
+                }
                 return true;
             } else {
+                EntityUtils.consumeQuietly(response.getEntity());
                 return false;
             }
-
-        } finally {
-            getMethod.releaseConnection();
         }
     }
 
@@ -109,17 +120,32 @@ public class HttpConnector {
         return bOk;
     }
 
-    private HttpClient getHttpClient(int connectionRetry, int conectionTimeout) {
+    private CloseableHttpClient getHttpClient(int connectionRetry, int connectionTimeout) {
         if (this.httpClient == null) {
-            HttpClient client = new HttpClient();
+            RequestConfig.Builder configBuilder = RequestConfig.custom();
 
-            //TODO: write english code comments 
-            //Se configura el n�mero de reintentos
-            client.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
-                    new DefaultHttpMethodRetryHandler(connectionRetry, false));
+            boolean bTimeout = false;
+            String connectTimeOut = System.getProperty("sun.net.client.defaultConnectTimeout");
+            if ((connectTimeOut != null) && (connectTimeOut.length() > 0)) {
+                configBuilder.setConnectTimeout(Integer.parseInt(connectTimeOut));
+                bTimeout = true;
+            }
+            String readTimeOut = System.getProperty("sun.net.client.defaultReadTimeout");
+            if ((readTimeOut != null) && (readTimeOut.length() > 0)) {
+                configBuilder.setSocketTimeout(Integer.parseInt(readTimeOut));
+                bTimeout = true;
+            }
+            if (!bTimeout) {
+                configBuilder.setConnectTimeout(connectionTimeout);
+                configBuilder.setSocketTimeout(connectionTimeout);
+            }
 
-            //TODO: write english code comments 
-            //Se comprueban las propiedades proxy del sistema. Si est�n rellenas, se rellena
+            HttpRequestRetryHandler retryHandler = new DefaultHttpRequestRetryHandler(connectionRetry, false);
+
+            HttpClientBuilder builder = HttpClients.custom()
+                    .setRetryHandler(retryHandler)
+                    .setDefaultRequestConfig(configBuilder.build());
+
             String proxyHost = System.getProperty("http.proxyHost");
             if ((proxyHost != null) && (proxyHost.length() > 0)) {
                 String proxyPortSrt = System.getProperty("http.proxyPort");
@@ -127,51 +153,33 @@ public class HttpConnector {
                     proxyPortSrt = "8080";
                 }
                 int proxyPort = Integer.parseInt(proxyPortSrt);
-
-                client.getHostConfiguration().setProxy(proxyHost, proxyPort);
+                builder.setProxy(new HttpHost(proxyHost, proxyPort));
             }
 
-            //TODO: write english code comments 
-            //Se configura el timeout de la conexion. Primero se intenta asignar los par�metros
-            //pasados. Si est�n vac�os, se pone el par�metro por defecto
-            boolean bTimeout = false;
-            String connectTimeOut = System.getProperty("sun.net.client.defaultConnectTimeout");
-            if ((connectTimeOut != null) && (connectTimeOut.length() > 0)) {
-                client.getParams().setIntParameter("sun.net.client.defaultConnectTimeout", Integer.parseInt(connectTimeOut));
-                bTimeout = true;
-            }
-            String readTimeOut = System.getProperty("sun.net.client.defaultReadTimeout");
-            if ((readTimeOut != null) && (readTimeOut.length() > 0)) {
-                client.getParams().setIntParameter("sun.net.client.defaultReadTimeout", Integer.parseInt(readTimeOut));
-                bTimeout = true;
-            }
-            if (!bTimeout) {
-                client.getParams().setIntParameter(HttpMethodParams.SO_TIMEOUT, conectionTimeout);
-            }
-
-            this.httpClient = client;
+            this.httpClient = builder.build();
         }
         return this.httpClient;
     }
     
     public String getURLContent(String url, String jsonParamName, String jsonParamValue) throws IOException {
-        HttpClient client = this.getHttpClient(CONNECTION_RETRIES, TIMEOUT_CONNECTION);
-        PostMethod post = new PostMethod(url);
-        post.setParameter(jsonParamName, jsonParamValue);
+        CloseableHttpClient client = this.getHttpClient(CONNECTION_RETRIES, TIMEOUT_CONNECTION);
+        HttpPost post = new HttpPost(url);
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair(jsonParamName, jsonParamValue));
+        post.setEntity(new UrlEncodedFormEntity(params, StandardCharsets.UTF_8));
 
-        try {
-            client.executeMethod(post);
-
-            if (post.getStatusCode() >= STATUS_OK_START && post.getStatusCode() <= STATUS_OK_END) {
-                byte[] byteResponse = post.getResponseBody();
-                String res = new String(byteResponse, ENCODING);
-                return res;
+        try (CloseableHttpResponse response = client.execute(post)) {
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode >= STATUS_OK_START && statusCode <= STATUS_OK_END) {
+                HttpEntity entity = response.getEntity();
+                if (entity == null) {
+                    return "";
+                }
+                return EntityUtils.toString(entity, ENCODING);
             } else {
+                EntityUtils.consumeQuietly(response.getEntity());
                 return null;
             }
-
-        } finally {
-        	post.releaseConnection();
         }
     }
 }

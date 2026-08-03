@@ -1,0 +1,23 @@
+# Ficheros que deben de ser siempre fin de linea linux
+*.sh text eol=lf
+ 
+*.java  diff=java encoding=UTF-8
+*.groovy  encoding=UTF-8
+*.xml  diff=xml
+*.properties 
+*.html  diff=html
+*.htm  diff=html
+*.cmd 
+ 
+# Ensure those won't be messed up with
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.ttf binary
+*.otf binary
+*.woff binary
+*.eot binary
+*.woff2 binary
+*.pdf binary
+*.ico binary

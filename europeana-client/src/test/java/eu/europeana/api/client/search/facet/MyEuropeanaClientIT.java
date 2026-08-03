@@ -17,7 +17,7 @@ import eu.europeana.api.client.myeuropeana.response.TagsApiResponse;
 
 @Ignore
 /** my europeana is not available for the time being */
-public class MyEuropeanaClientTest {
+public class MyEuropeanaClientIT {
 
 	@Test
 	public void testParseApiResponse() throws MyEuropeanaApiException, IOException{

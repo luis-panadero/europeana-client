@@ -21,7 +21,7 @@ import eu.europeana.api.client.search.query.Api2QueryInterface;
  *
  */
 @Ignore
-public class RichProfileByCollectionTest extends EuClientDatasetUtil {
+public class RichProfileByCollectionIT extends EuClientDatasetUtil {
 
 	@Test
 	public void saveMedataForCollections() throws IOException, EuropeanaApiProblem {

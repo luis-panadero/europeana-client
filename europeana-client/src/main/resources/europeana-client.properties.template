@@ -1,8 +1,8 @@
-# the uri of the search API using JSON response => http://www.europeana.eu/api/v2/search.json
+# the uri of the search API using JSON response => https://api.europeana.eu/api/v2/search.json
 # for testing within the development environment a local URI can be used e.g. localhost:8989/api/v2/search.json
-europeana.api.uri = http://www.europeana.eu/api/v2/
+europeana.api.uri = https://api.europeana.eu/api/v2/
 
-# the uri of the search API using JSON response => http://www.europeana.eu/api/v2/search.json
+# the uri of the search API using JSON response => https://api.europeana.eu/api/v2/search.json
 # for testing within the development environment a local URI can be used e.g. localhost:8989/api/v2/search.json
 europeana.search.urn = search.json
 

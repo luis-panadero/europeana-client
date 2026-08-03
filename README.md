@@ -1,29 +1,27 @@
-europeana-client
-================
+# Europeana-Client
 
 This project implements a java client for the Europeana Search Api.
 
-The project was forked from Europeana4J (http://code.google.com/p/europeana4j/) mavenized and refactored.
+The project was forked from Europeana4J (http://code.google.com/p/europeana4j/) / (https://github.com/baratz-es/europeana4j) mavenized and refactored.
 
-====== integration in Eclipse workspace ======
+### How run tests
+
+```sh
+cp src/main/resources/europeana-client.properties.template src/test/resources/europeana-client.properties
+```
+Edit it and put a valid APIKEY.
+
+Run `mvn clean verify`
+
+### Loading in Eclipse workspace
 
 git clone ....
 
 File => Import => Existing Maven Projects ...
 
-update compilation level and the java version in the facets to 1.6 (through Window/Project => Preferences => Java Compiler) 
 
-copy src/main/resources/europeana-client.properties.template src/main/resources/europeana-client.properties
+make sure you never commit the europeana-client.properties
 
-== set the values in the europeana-client.properties file
-
-copy src/main/resources/log4j.xml.template src/main/resources/log4j.xml
-
-== make sure you never commit the europeana-client.properties and log4j.xml files into repository
-
-Run unit tests: SimpleSearchTest, ComplexSearchTest, ThumbnailsForCollectionAccessorTest
-
-== Check the code in the *Test classes to see  
 
 ## License
 

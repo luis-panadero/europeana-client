@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import eu.europeana.api.client.exception.EuropeanaApiProblem;
 
-public class ThumbnailsForCollectionAccessorTest extends ThumbnailAccessorUtils{
+public class ThumbnailsForCollectionAccessorIT extends ThumbnailAccessorUtils{
 
 	@Test
 	public void testGetThumbnailsForCollectionLimit() throws IOException, EuropeanaApiProblem {
@@ -21,7 +21,6 @@ public class ThumbnailsForCollectionAccessorTest extends ThumbnailAccessorUtils{
 		int startPosition = 0; 
 		Map<String, String> thumbnails = tca.getThumbnailsForCollection(startPosition,
 				resultsSize, ThumbnailsAccessor.ERROR_POLICY_RETHROW);
-		
 		
 		// assert all image urls are correct
 		assertTrue(thumbnails.size() == resultsSize);

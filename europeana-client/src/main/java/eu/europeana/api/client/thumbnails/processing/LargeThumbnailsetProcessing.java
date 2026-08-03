@@ -9,12 +9,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Observable;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class LargeThumbnailsetProcessing extends Observable{
 
 	
-	Logger log = Logger.getLogger(getClass());
+	Logger log = LoggerFactory.getLogger(getClass());
 	
 	File datasetfile;
 	int lastReadPosition;

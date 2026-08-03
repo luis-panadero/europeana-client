@@ -13,7 +13,7 @@ import eu.europeana.api.client.exception.EuropeanaApiProblem;
 import eu.europeana.api.client.search.query.Api2Query;
 import eu.europeana.api.client.search.query.EuropeanaQueryInterface;
 
-public class ThumbnailsAccessorTest {
+public class ThumbnailsAccessorIT {
 
 	@Test
 	public void testCopyThumbnails() throws IOException, EuropeanaApiProblem {

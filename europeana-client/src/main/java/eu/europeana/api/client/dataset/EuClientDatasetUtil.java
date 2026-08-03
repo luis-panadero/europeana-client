@@ -10,7 +10,8 @@ import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import eu.europeana.api.client.config.ClientConfiguration;
 import eu.europeana.api.client.config.ThumbnailAccessConfiguration;
@@ -22,7 +23,7 @@ public class EuClientDatasetUtil extends BaseDatasetUtil {
 	public final int POLICY_OVERWRITE_FILE = 1;
 	public final int POLICY_APPEND_TO_FILE = 2;
 
-	protected Logger log = Logger.getLogger(getClass());
+	protected Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public File getDataSetFile(boolean urls) {

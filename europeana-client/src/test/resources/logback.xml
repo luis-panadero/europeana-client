@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%-5level [%logger{20}] %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="eu.europeana.api.client" level="TRACE"/>
+	<logger name="eu.europeana" level="DEBUG"/>
+
+	<root level="INFO">
+		<appender-ref ref="console"/>
+	</root>
+</configuration>

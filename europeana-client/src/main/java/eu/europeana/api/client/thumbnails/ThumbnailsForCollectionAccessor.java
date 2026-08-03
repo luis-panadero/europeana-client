@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import eu.europeana.api.client.EuropeanaApi2Client;
 import eu.europeana.api.client.exception.EuropeanaApiProblem;
@@ -26,7 +26,7 @@ import eu.europeana.api.client.search.query.Api2QueryInterface;
  */
 public class ThumbnailsForCollectionAccessor extends ThumbnailsAccessor{
 
-	private Log logger = LogFactory.getLog(ThumbnailsForCollectionAccessor.class);
+	private Logger logger = LoggerFactory.getLogger(ThumbnailsForCollectionAccessor.class);
 	
 	public ThumbnailsForCollectionAccessor(String collectionName){
 		this(collectionName, null);

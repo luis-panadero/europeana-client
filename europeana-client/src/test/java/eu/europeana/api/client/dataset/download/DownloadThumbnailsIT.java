@@ -3,6 +3,8 @@ package eu.europeana.api.client.dataset.download;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
@@ -11,7 +13,7 @@ import eu.europeana.api.client.dataset.EuClientDatasetUtil;
 import eu.europeana.api.client.thumbnails.download.ThumbnailDownloader;
 import eu.europeana.api.client.thumbnails.processing.LargeThumbnailsetProcessing;
 
-public class DownloadThumbnailsTest extends
+public class DownloadThumbnailsIT extends
 		EuClientDatasetUtil {
 
 	// public static String CLASS_WW1 = "ww1";
@@ -19,7 +21,7 @@ public class DownloadThumbnailsTest extends
 	//support running the test as stand alone class
 	public static void main(String[] args) throws Exception {                    
 		parseParams(args);      
-		JUnitCore.main(DownloadThumbnailsTest.class.getCanonicalName());            
+		JUnitCore.main(DownloadThumbnailsIT.class.getCanonicalName());            
 	}
 	
 	
@@ -49,12 +51,27 @@ public class DownloadThumbnailsTest extends
 
 
 	protected File getDatasetImageFolder() {
-		return new File(getConfiguration().getImageFolder(getDataset()));		
+		File folder = new File(System.getProperty("java.io.tmpdir"),
+				"europeana-client" + File.separator + getDataset() + File.separator + "images");
+		if (!folder.exists() && !folder.mkdirs()) {
+			throw new IllegalStateException(
+					"Cannot create download folder: " + folder.getAbsolutePath());
+		}
+		return folder;
 	}
 
 
 	protected File getDatasetFile() {
-		return super.getDataSetFile(false);
+		String resourcePath = "/europeanaclient/datasets/" + getDataset() + ".csv";
+		URL resource = getClass().getResource(resourcePath);
+		if (resource == null) {
+			throw new IllegalStateException("Classpath resource not found: " + resourcePath);
+		}
+		try {
+			return new File(resource.toURI());
+		} catch (URISyntaxException e) {
+			throw new IllegalStateException("Invalid classpath resource URI: " + resourcePath, e);
+		}
 	}
 	
 	

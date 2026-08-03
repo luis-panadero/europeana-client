@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 
@@ -31,7 +31,7 @@ import eu.europeana.api.client.util.BlockIterator.BlockLoader;
  */
 public class EuropeanaConnection {
 
-	private static final Log log = LogFactory.getLog(EuropeanaConnection.class);
+	private static final Logger log = LoggerFactory.getLogger(EuropeanaConnection.class);
 	
 	private static final int MAX_RESULTS_PAGE = 100;
 	
@@ -100,7 +100,11 @@ public class EuropeanaConnection {
             } else {
                 res.acumulate(res2);
             }
-            offset += res2.getItemsCount();
+            long pageItems = res2.getItemsCount();
+            if (pageItems == 0) {
+                break;
+            }
+            offset += pageItems;
             
         } while (res.getItemsCount() < limit);
         
