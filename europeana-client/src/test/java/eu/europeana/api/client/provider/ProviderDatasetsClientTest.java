@@ -5,7 +5,8 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.Test;
 
 import eu.europeana.api.client.ProviderDatasetsClient;
@@ -15,7 +16,7 @@ import eu.europeana.api.client.model.provider.Provider;
 
 public class ProviderDatasetsClientTest {
 
-	Logger log = Logger.getLogger(getClass());
+	Logger log = LoggerFactory.getLogger(getClass());
 	
 	@Test
 	public void getProviders() throws IOException, EuropeanaApiProblem{
@@ -29,7 +30,7 @@ public class ProviderDatasetsClientTest {
 			cnt++;
 			//System.out.println(provider.toString());
 			if(cnt <= 5)
-				log.info(provider);
+				log.info("{}", provider);
 			else
 				break;
 						
@@ -47,7 +48,7 @@ public class ProviderDatasetsClientTest {
 			Provider firstProvider = providers.get(0);
 			Provider thirdProvider = providers.get(2);
 			for (Provider provider : providers)
-				log.info(provider);
+				log.info("{}", provider);
 		
 			providers = client.getProvidersList(2, 1, null);
 			assertNotNull(providers);

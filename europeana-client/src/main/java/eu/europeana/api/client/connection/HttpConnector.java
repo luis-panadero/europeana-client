@@ -15,8 +15,8 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A HttpConnector is a class encapsulating simple HTTP access.
@@ -33,7 +33,7 @@ public class HttpConnector {
     private static final String ENCODING = "UTF-8";
     private HttpClient httpClient = null;
 
-    private static final Log log = LogFactory.getLog(HttpConnector.class);
+    private static final Logger log = LoggerFactory.getLogger(HttpConnector.class);
 	
     public String getURLContent(String url) throws IOException {
         HttpClient client = this.getHttpClient(CONNECTION_RETRIES, TIMEOUT_CONNECTION);

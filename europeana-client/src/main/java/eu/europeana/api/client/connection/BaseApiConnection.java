@@ -2,7 +2,8 @@ package eu.europeana.api.client.connection;
 
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import eu.europeana.api.client.config.ClientConfiguration;
 
@@ -14,7 +15,7 @@ public class BaseApiConnection {
 	// "http://www.europeana.eu/api/v2/search.json";
 	private String baseServiceUri = "";
 	private HttpConnector httpConnection = new HttpConnector();
-	protected Logger logger = Logger.getLogger(getClass().getName());
+	protected Logger logger = LoggerFactory.getLogger(getClass().getName());
 
 	public String getApiKey() {
 		return apiKey;
