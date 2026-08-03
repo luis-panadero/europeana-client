@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import eu.europeana.api.client.ProviderDatasetsClient;
@@ -14,6 +15,7 @@ import eu.europeana.api.client.exception.EuropeanaApiProblem;
 import eu.europeana.api.client.impl.ProviderDatasetsClientImpl;
 import eu.europeana.api.client.model.provider.Provider;
 
+@Ignore("Europeana Providers API (/api/v2/providers.json) already returns 404")
 public class ProviderDatasetsClientIT {
 
 	Logger log = LoggerFactory.getLogger(getClass());

@@ -3,6 +3,8 @@ package eu.europeana.api.client.dataset.download;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
@@ -54,7 +56,16 @@ public class DownloadThumbnailsIT extends
 
 
 	protected File getDatasetFile() {
-		return super.getDataSetFile(false);
+		String resourcePath = "/europeanaclient/datasets/" + getDataset() + ".csv";
+		URL resource = getClass().getResource(resourcePath);
+		if (resource == null) {
+			throw new IllegalStateException("Classpath resource not found: " + resourcePath);
+		}
+		try {
+			return new File(resource.toURI());
+		} catch (URISyntaxException e) {
+			throw new IllegalStateException("Invalid classpath resource URI: " + resourcePath, e);
+		}
 	}
 	
 	

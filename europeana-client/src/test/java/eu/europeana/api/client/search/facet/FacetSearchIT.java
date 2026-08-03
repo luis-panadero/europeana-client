@@ -35,12 +35,10 @@ public class FacetSearchIT {
 		EuropeanaApi2Client client = new EuropeanaApi2Client();
 		
 		// create the query object
-//		Api2Query europeanaQuery = new Api2Query("\"05812_L_RO_CIMEC_ese\"");
-		Api2Query europeanaQuery = new Api2Query();
-//		europeanaQuery.set
-//		europeanaQuery.setWhatTerms("building");
-//		europeanaQuery.addQueryRefinement("NOT gips");
-//		europeanaQuery.addQueryRefinement("NOT capitel");
+		Api2Query europeanaQuery = new Api2Query("\"05812_L_RO_CIMEC_ese\"");
+		europeanaQuery.setWhatTerms("building");
+		europeanaQuery.addQueryRefinement("NOT gips");
+		europeanaQuery.addQueryRefinement("NOT capitel");
 
 		EuropeanaApi2Client europeanaClient = new EuropeanaApi2Client();
 		
@@ -49,9 +47,10 @@ public class FacetSearchIT {
 		String queryUrl = europeanaQuery.getQueryUrl(europeanaClient,
 				RESULTS_SIZE, OFFSET);
 		// System.out.println(queryUrl);
-		String encodedUrl = "http://www.europeana.eu/api/v2/search.json?query=what%3A%28building%29+AND+" +
-				"europeana_collectionName%3A%28%2205812_L_RO_CIMEC_ese%22%29&qf=NOT+gips&qf=NOT+capitel&rows=1&start=1&wskey="
-				+ europeanaClient.getApiKey();
+		String encodedUrl = "https://api.europeana.eu/api/v2/search.json?wskey="
+				+ europeanaClient.getApiKey()
+				+ "&query=what%3A(building)+AND+europeana_collectionName%3A(%2205812_L_RO_CIMEC_ese%22)"
+				+ "&qf=NOT+gips&qf=NOT+capitel&rows=1&start=1";
 
 		assertEquals(encodedUrl, queryUrl);
 

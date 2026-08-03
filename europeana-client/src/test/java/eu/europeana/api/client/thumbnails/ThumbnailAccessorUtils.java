@@ -22,7 +22,7 @@ import eu.europeana.api.client.search.query.Api2QueryInterface;
 
 public class ThumbnailAccessorUtils extends EuClientDatasetUtil {
 
-	protected static final String TEST_COLLECTION_NAME = "07501_*";
+	protected static final String TEST_COLLECTION_NAME = "2020706_*";
 	protected static final int TEST_COLLECTION_SIZE = 40811;
 	protected static final String DEVELOPMENT_COLLECTION_NAME = "00000_*";
 

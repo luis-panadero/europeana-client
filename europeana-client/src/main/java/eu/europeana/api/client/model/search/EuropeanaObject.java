@@ -137,8 +137,12 @@ public class EuropeanaObject extends CommonMetadata{
 	}
 
 	public String toString() {
+		String titleValue = "(no title)";
+		if (this.getTitle() != null && !this.getTitle().isEmpty()) {
+			titleValue = String.valueOf(this.getTitle().get(0));
+		}
 		String result = "------------------------\n"
-				+ "Title: " + this.getTitle().get(0) + "\n"
+				+ "Title: " + titleValue + "\n"
 				+ "About: " + this.getAbout() + "\n"
 				+ "------------------------\n";
 		return result;

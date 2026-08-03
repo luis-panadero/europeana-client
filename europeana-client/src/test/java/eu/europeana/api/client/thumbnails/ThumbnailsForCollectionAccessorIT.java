@@ -22,7 +22,6 @@ public class ThumbnailsForCollectionAccessorIT extends ThumbnailAccessorUtils{
 		Map<String, String> thumbnails = tca.getThumbnailsForCollection(startPosition,
 				resultsSize, ThumbnailsAccessor.ERROR_POLICY_RETHROW);
 		
-		
 		// assert all image urls are correct
 		assertTrue(thumbnails.size() == resultsSize);
 		

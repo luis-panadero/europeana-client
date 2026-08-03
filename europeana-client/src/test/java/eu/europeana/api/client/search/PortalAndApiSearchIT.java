@@ -16,11 +16,11 @@ public class PortalAndApiSearchIT extends BaseSearchUtils{
 	public void testSearchByPortalUrl() throws IOException, EuropeanaApiProblem{
 		
 		EuropeanaApi2Client client = new EuropeanaApi2Client();
-		final String portalSearchUrl = "http://www.europeana.eu/portal/search.html?query=DATA_PROVIDER%3A%22The+Wellcome+Library%22+Great+War+OR+First+World+War+OR+WW1+OR+1914-1918&start=13&rows=12";
-		EuropeanaApi2Results results = client.searchApi2(portalSearchUrl, 5, 1);
+		final String portalSearchUrl = "https://www.europeana.eu/en/search?query=DATA_PROVIDER%3A%22Wellcome+Library%22+Great+War+OR+First+World+War+OR+WW1+OR+1914-1918&start=13&rows=12";
+		EuropeanaApi2Results results = client.searchApi2(portalSearchUrl, 4, 1);
 		assertNotNull(results.getAllItems());
-		assertEquals(5, results.getAllItems().size());
-		assertEquals(5, results.getItemsCount());
+		assertEquals(4, results.getAllItems().size());
+		assertEquals(4, results.getItemsCount());
 		
 		printSearchResults(results);
 	}

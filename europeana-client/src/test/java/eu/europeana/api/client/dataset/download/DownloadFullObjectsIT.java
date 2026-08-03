@@ -4,6 +4,8 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
@@ -12,7 +14,6 @@ import org.junit.runner.JUnitCore;
 
 import eu.europeana.api.client.EuropeanaApi2Client;
 import eu.europeana.api.client.dataset.EuClientDatasetUtil;
-import eu.europeana.api.client.metadata.MetadataAccessor;
 
 public class DownloadFullObjectsIT extends
 		EuClientDatasetUtil {
@@ -34,7 +35,7 @@ public class DownloadFullObjectsIT extends
 
 		ensureParamsInit();
 		
-		File datasetFile = (new MetadataAccessor()).getDatasetFile(EUROPEANA_ID_LIST_CSV);
+		File datasetFile = resolveClasspathDatasetFile(EUROPEANA_ID_LIST_CSV);
 		if(!datasetFile.exists())
 			fail("required dataset file doesn't exist" + datasetFile);
 		
@@ -94,6 +95,19 @@ public class DownloadFullObjectsIT extends
 		//if not sent through parameters set it to test.
 		if(getDataset() == null)
 			setDataset("allsound");
+	}
+
+	protected File resolveClasspathDatasetFile(String fileName) {
+		String resourcePath = "/europeanaclient/datasets/metadata/" + fileName;
+		URL resource = getClass().getResource(resourcePath);
+		if (resource == null) {
+			throw new IllegalStateException("Classpath resource not found: " + resourcePath);
+		}
+		try {
+			return new File(resource.toURI());
+		} catch (URISyntaxException e) {
+			throw new IllegalStateException("Invalid classpath resource URI: " + resourcePath, e);
+		}
 	}
 
 	
