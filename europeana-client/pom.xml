@@ -24,6 +24,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java-release.version>8</java-release.version>
         <java.version>1.${java-release.version}</java.version>
+        <httpcomponents-client.version>4.5.14</httpcomponents-client.version>
     </properties>
 
     <dependencies>
@@ -47,9 +48,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>commons-httpclient</groupId>
-            <artifactId>commons-httpclient</artifactId>
-            <version>3.1</version>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpcomponents-client.version}</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
