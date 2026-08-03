@@ -7,12 +7,12 @@ import org.slf4j.LoggerFactory;
 
 import eu.europeana.api.client.config.ClientConfiguration;
 
-//TODO: remove the support for V1 and replace the usage of EuropeanaConnection to BaseApiConnection  
+/**
+ * Base HTTP connection for Europeana API clients (Search API v2 and related services).
+ */
 public class BaseApiConnection {
 
 	private String apiKey;
-	// private String annotationServiceUri =
-	// "http://www.europeana.eu/api/v2/search.json";
 	private String baseServiceUri = "";
 	private HttpConnector httpConnection = new HttpConnector();
 	protected Logger logger = LoggerFactory.getLogger(getClass().getName());
@@ -31,6 +31,20 @@ public class BaseApiConnection {
 
 	public void setServiceUri(String serviceUri) {
 		this.baseServiceUri = serviceUri;
+	}
+
+	/**
+	 * Alias of {@link #getServiceUri()} kept for query URL builders.
+	 */
+	public String getEuropeanaUri() {
+		return getServiceUri();
+	}
+
+	/**
+	 * Alias of {@link #setServiceUri(String)} kept for query URL builders.
+	 */
+	public void setEuropeanaUri(String europeanaUri) {
+		setServiceUri(europeanaUri);
 	}
 
 	public HttpConnector getHttpConnection() {
@@ -60,7 +74,6 @@ public class BaseApiConnection {
 	 */
 	public BaseApiConnection() {
 		this(
-				//ClientConfiguration.getInstance().getSearchUri(),
 				ClientConfiguration.getInstance().getEuropeanaUri(),
 				ClientConfiguration.getInstance().getApiKey());
 	}
@@ -76,10 +89,4 @@ public class BaseApiConnection {
 		
 		return getHttpConnection().getURLContent(url, paramName, jsonPost);
 	}
-	
-//	protected String buildApiKeyParam() {
-//		return "?wskey=" + getApiKey();
-//	}
-	
-	
 }

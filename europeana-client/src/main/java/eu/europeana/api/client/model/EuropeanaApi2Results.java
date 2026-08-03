@@ -17,9 +17,9 @@ import eu.europeana.api.client.model.search.EuropeanaApi2Item;
 import eu.europeana.api.client.response.abstracts.AbstractListResponse;
 
 /**
- * A EuropeanaResults is an object encapsulating the results of a query to
- * Europeana. It can be the result of multiple calls to the Europeana API with
- * the same query (using pagination of results).
+ * A EuropeanaApi2Results is an object encapsulating the results of a query to
+ * Europeana Search API v2. It can be the result of multiple calls to the
+ * Europeana API with the same query (using pagination of results).
  *
  * @author Andres Viedma Pelaez
  */
@@ -56,44 +56,6 @@ public class EuropeanaApi2Results extends AbstractListResponse<EuropeanaApi2Item
         }
     }
 
-    /**
-     * Returns the number of results provided in this results object
-     * @return 
-     * Used in Client API 1
-     */
-    @Deprecated 
-    public long getItemCount() {
-        return (this.getItems() == null ? 0 : this.getItems().size());
-    }
-
-    /**
-     * @deprecated used only in Europeana V1
-     * Acumulates the provided results in this object
-     * @param res2 
-     */
-    @Deprecated
-    public void acumulate(EuropeanaApi2Results res2) {
-    	this.getItems().addAll(res2.getItems());
-    	this.setItemsCount(getItemsCount() + res2.getItemsCount());
-    }
-    
-    /**
-     * @Deprecated Europeana V1 method 
-     * @param limit
-     */
-    @Deprecated
-    public void limitResults (int limit)
-    {
-        if (this.getItemCount() > limit) {
-            this.setItems(this.getItems().subList (0, limit));
-            this.setItemsCount(limit);
-        }
-    }
-
-    /**
-     * This doesn't seems to be used.  
-     * @return
-     */
     public String toJSON() {
         Gson gson = new Gson();
         return gson.toJson(this);
@@ -110,33 +72,4 @@ public class EuropeanaApi2Results extends AbstractListResponse<EuropeanaApi2Item
     public String getNextCursor() {
     	return this.nextCursor;
     }
-    
-    
-    //TODO: remove commented code
-//    public static AbstractApiResponse loadJSON(String json) {
-//        Gson gson = new Gson();
-//        return gson.fromJson(json, EuropeanaApi2Results.class);
-//    }
-
-//    public static AbstractApiResponse loadJSON(Reader json) {
-//        Gson gson = new Gson();
-//        return gson.fromJson(json, EuropeanaApi2Results.class);
-//    }
-
-//    public List<EuropeanaApi2Results> loadJSONList(String json) {
-//        Gson gson = new Gson();
-//        Type collectionType = new TypeToken<List<EuropeanaApi2Results>>() {
-//        }.getType();
-//        return gson.fromJson(json, collectionType);
-//    }
-
-//    public List<EuropeanaApi2Results> loadJSONList(Reader json) {
-//        Gson gson = new Gson();
-//        Type collectionType = new TypeToken<List<EuropeanaApi2Results>>() {
-//        }.getType();
-//        return gson.fromJson(json, collectionType);
-//    }
-
-    
-	
 }

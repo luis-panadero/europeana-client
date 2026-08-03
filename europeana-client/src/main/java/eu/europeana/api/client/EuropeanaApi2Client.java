@@ -1,13 +1,12 @@
 package eu.europeana.api.client;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import eu.europeana.api.client.config.ClientConfiguration;
-import eu.europeana.api.client.connection.EuropeanaConnection;
+import eu.europeana.api.client.connection.BaseApiConnection;
 import eu.europeana.api.client.exception.EuropeanaApiProblem;
 import eu.europeana.api.client.model.EuropeanaApi2Results;
 import eu.europeana.api.client.model.EuropeanaObjectResponse;
@@ -27,7 +26,7 @@ import eu.europeana.api.client.search.query.EuropeanaQueryInterface;
  *          Furthermore, it sends search requests, retrieves results and gets
  *          objects from the search service.
  */
-public class EuropeanaApi2Client extends EuropeanaConnection {
+public class EuropeanaApi2Client extends BaseApiConnection {
 	private String jsonResult = "";
 	private EuropeanaObjectResponse objects;
 	private Api2QueryBuilder queryBuilder;
@@ -45,7 +44,7 @@ public class EuropeanaApi2Client extends EuropeanaConnection {
 
 	/**
 	 * Default constructor which calls the default constructor of the
-	 * EuropeanaConnection class which is the parent class of
+	 * BaseApiConnection class which is the parent class of
 	 * EuropeanaApi2Client.
 	 */
 	public EuropeanaApi2Client() {
@@ -87,7 +86,6 @@ public class EuropeanaApi2Client extends EuropeanaConnection {
 	public EuropeanaApi2Results searchApi2(EuropeanaQueryInterface query, int limit, int start)
 			throws IOException, EuropeanaApiProblem {
 
-		// String cadenaBusq = search.getSearchTerms();
 		String url = query.getQueryUrl(this, limit, start);
 		return getSearchResults(url);
 	}
@@ -104,9 +102,7 @@ public class EuropeanaApi2Client extends EuropeanaConnection {
 	public EuropeanaApi2Results searchApi2(EuropeanaQueryInterface query, String cursor, int rows)
 			throws IOException, EuropeanaApiProblem {
 
-		// String cadenaBusq = search.getSearchTerms();
 		String url = query.getQueryUrl(this, cursor, rows);
-//    	url = URLEncoder.encode(url, "UTF-8");
 		return getSearchResults(url);
 	}
 
@@ -177,7 +173,7 @@ public class EuropeanaApi2Client extends EuropeanaConnection {
 	 * EuropeanaObject which is then return by the method.
 	 * 
 	 * @param id:
-	 *            id of the new object.
+	 *            id of the object.
 	 * @return EuropeanaObject which represents a full result object of the
 	 *         search.
 	 * @throws IOException

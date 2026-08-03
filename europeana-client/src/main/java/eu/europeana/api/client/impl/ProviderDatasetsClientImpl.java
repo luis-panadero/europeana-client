@@ -25,7 +25,7 @@ public class ProviderDatasetsClientImpl extends BaseApiConnection implements
 
 	/**
 	 * Default constructor which calls the default constructor of the parent
-	 * EuropeanaConnection class
+	 * BaseApiConnection class
 	 */
 	public ProviderDatasetsClientImpl() {
 		super();

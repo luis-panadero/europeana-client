@@ -1,6 +1,6 @@
 # Europeana-Client
 
-This project implements a java client for the Europeana Search Api.
+This project implements a java client for the Europeana Search API v2.
 
 The project was forked from Europeana4J (http://code.google.com/p/europeana4j/) / (https://github.com/baratz-es/europeana4j) mavenized and refactored.
 

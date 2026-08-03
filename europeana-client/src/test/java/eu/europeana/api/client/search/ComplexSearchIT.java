@@ -7,7 +7,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import eu.europeana.api.client.connection.EuropeanaConnection;
+import eu.europeana.api.client.EuropeanaApi2Client;
+import eu.europeana.api.client.exception.EuropeanaApiProblem;
 import eu.europeana.api.client.model.EuropeanaApi2Results;
 import eu.europeana.api.client.model.search.EuropeanaApi2Item;
 import eu.europeana.api.client.search.common.EuropeanaFields;
@@ -19,7 +20,7 @@ import eu.europeana.api.client.search.query.adv.EuropeanaSearchTerm;
 public class ComplexSearchIT {
 
 	@Test
-	public void testComplexSearch() throws IOException{
+	public void testComplexSearch() throws IOException, EuropeanaApiProblem{
 		
 		 long ms0 = System.currentTimeMillis();
 
@@ -42,19 +43,19 @@ public class ComplexSearchIT {
          europeanaQuery.setType(EuropeanaComplexQuery.TYPE.TEXT);
          
          //invoke the search api
-         EuropeanaConnection europeanaConnection = new EuropeanaConnection();
+         EuropeanaApi2Client europeanaClient = new EuropeanaApi2Client();
          final int FECTHED_RESULTS_COUNT = 20;
-		EuropeanaApi2Results res = europeanaConnection.search(europeanaQuery, FECTHED_RESULTS_COUNT, 0);
+		EuropeanaApi2Results res = europeanaClient.searchApi2(europeanaQuery, FECTHED_RESULTS_COUNT, 0);
          
          long t = System.currentTimeMillis() - ms0;
          System.out.println("*** Response time (client + server processing): " + (t / 1000d) + " seconds");
-         System.out.println("Results: " + res.getItemCount() + " / " + res.getTotalResults());
+         System.out.println("Results: " + res.getItemsCount() + " / " + res.getTotalResults());
          
          //Check results
          assertTrue(res.getTotalResults() > 0);
          
          //display results
-         if (res.getItemCount() > 0) {
+         if (res.getItemsCount() > 0) {
              List<EuropeanaApi2Item> items = res.getAllItems();
              for (int i = 0; i < items.size(); i++) {
                  EuropeanaApi2Item item = items.get(i);

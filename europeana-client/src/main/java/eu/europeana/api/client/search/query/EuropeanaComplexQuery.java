@@ -5,7 +5,7 @@ import java.net.URLEncoder;
 import java.util.List;
 
 import eu.europeana.api.client.config.ClientConfiguration;
-import eu.europeana.api.client.connection.EuropeanaConnection;
+import eu.europeana.api.client.connection.BaseApiConnection;
 import eu.europeana.api.client.search.query.adv.EuropeanaSearchTerm;
 
 /**
@@ -52,11 +52,11 @@ public class EuropeanaComplexQuery implements EuropeanaQueryInterface {
         return searchTerms.toString();
     }
 
-    public String getQueryUrl(EuropeanaConnection connection) throws UnsupportedEncodingException {
+    public String getQueryUrl(BaseApiConnection connection) throws UnsupportedEncodingException {
         return getQueryUrl(connection, EuropeanaComplexQuery.DEFAULT_OFFSET);
     }
 
-    public String getQueryUrl(EuropeanaConnection connection, long offset) throws UnsupportedEncodingException {
+    public String getQueryUrl(BaseApiConnection connection, long offset) throws UnsupportedEncodingException {
         return getQueryUrl(connection, 12, offset);
     }
     
@@ -68,7 +68,7 @@ public class EuropeanaComplexQuery implements EuropeanaQueryInterface {
         this.type = type;
     }
 
-    public String getQueryUrl(EuropeanaConnection connection, long limit, long offset) throws UnsupportedEncodingException {
+    public String getQueryUrl(BaseApiConnection connection, long limit, long offset) throws UnsupportedEncodingException {
         String seachTerms = this.searchTerms.toString();
         StringBuilder url = new StringBuilder();
         url.append(connection.getEuropeanaUri());
@@ -84,11 +84,10 @@ public class EuropeanaComplexQuery implements EuropeanaQueryInterface {
         }
         url.append("&start=").append(offset);
         url.append("&wskey=").append(connection.getApiKey());
-        //System.err.println(url);
         return url.toString();
     }
     
-    public String getQueryUrl(EuropeanaConnection connection, String cursor, int rows) throws UnsupportedEncodingException {
+    public String getQueryUrl(BaseApiConnection connection, String cursor, int rows) throws UnsupportedEncodingException {
         String seachTerms = this.searchTerms.toString();
         StringBuilder url = new StringBuilder();
         url.append(connection.getEuropeanaUri());
@@ -103,7 +102,6 @@ public class EuropeanaComplexQuery implements EuropeanaQueryInterface {
 	    url.append("&cursorMark=").append(cursor);
 	    url.append("&sort=id asc");
         url.append("&wskey=").append(connection.getApiKey());
-        //System.err.println(url);
         return url.toString();
     }
     

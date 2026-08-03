@@ -6,13 +6,13 @@ import java.util.Iterator;
 /**
  *
  * This class defines a search term.
- * Search terms are defined in Europeana API by the parameter "searchTerms="
+ * Search terms are used as the Europeana Search API v2 "query=" parameter.
  * The simplest search term contains a field and a simple operand, ex:
- *      [...]?searchTerms=what: picasso[...]
+ *      [...]?query=what: picasso[...]
  *          -what: is the field
  *          -picasso: is the value (a non complex operand)
  * The more complex search terms can be composed of 2 or more search terms:
- *      [...]?searchTerms=what: ((picasso AND pablo) OR dune) OR what: picasso[...]
+ *      [...]?query=what: ((picasso AND pablo) OR dune) OR what: picasso[...]
  * In the above example, there are two search terms with "OR" logical operator between them:
  *      -what: ((picasso AND pablo) OR dune): the complex search term
  *      -what: picasso: the simple search term

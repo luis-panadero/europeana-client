@@ -20,7 +20,6 @@ class EuropeanaApi2ResultsSpec extends Specification {
         then:
         results.allItems.size() == 1
         results.allItems[0].id == '/x/y'
-        results.itemCount == 1
 
         when:
         results.allItems.add(new EuropeanaApi2Item())
@@ -36,54 +35,7 @@ class EuropeanaApi2ResultsSpec extends Specification {
 
         expect:
         results.allItems.isEmpty()
-        results.itemCount == 0
-    }
-
-    def "acumulate merges items and counts"() {
-        given:
-        def first = new EuropeanaApi2Results()
-        first.itemsCount = 1
-        first.addItem(new EuropeanaApi2Item(id: '1'))
-        def second = new EuropeanaApi2Results()
-        second.itemsCount = 2
-        second.addItem(new EuropeanaApi2Item(id: '2'))
-        second.addItem(new EuropeanaApi2Item(id: '3'))
-
-        when:
-        first.acumulate(second)
-
-        then:
-        first.allItems*.id == ['1', '2', '3']
-        first.itemsCount == 3
-    }
-
-    def "limitResults truncates items and itemsCount"() {
-        given:
-        def results = new EuropeanaApi2Results()
-        3.times { results.addItem(new EuropeanaApi2Item(id: "id-$it")) }
-        results.itemsCount = 3
-
-        when:
-        results.limitResults(2)
-
-        then:
-        results.allItems.size() == 2
-        results.itemsCount == 2
-        results.allItems*.id == ['id-0', 'id-1']
-    }
-
-    def "limitResults is a no-op when under the limit"() {
-        given:
-        def results = new EuropeanaApi2Results()
-        results.addItem(new EuropeanaApi2Item(id: 'only'))
-        results.itemsCount = 1
-
-        when:
-        results.limitResults(5)
-
-        then:
-        results.allItems.size() == 1
-        results.itemsCount == 1
+        results.allItems.size() == 0
     }
 
     def "toJSON roundtrip preserves counts and item id"() {

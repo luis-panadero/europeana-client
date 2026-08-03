@@ -1,6 +1,6 @@
 package eu.europeana.api.client.search.query
 
-import eu.europeana.api.client.connection.EuropeanaConnection
+import eu.europeana.api.client.connection.BaseApiConnection
 import spock.lang.Specification
 
 /**
@@ -11,7 +11,7 @@ class Api2QuerySpec extends Specification {
     static final String BASE_URI = 'http://www.europeana.eu/api/v2/'
     static final String API_KEY = 'TESTKEY'
 
-    EuropeanaConnection connection = new EuropeanaConnection(BASE_URI, API_KEY)
+    BaseApiConnection connection = new BaseApiConnection(BASE_URI, API_KEY)
 
     def "collectionName is included in search terms"() {
         given:

@@ -9,12 +9,13 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.europeana.api.client.connection.EuropeanaConnection;
+import eu.europeana.api.client.config.ClientConfiguration;
+import eu.europeana.api.client.connection.BaseApiConnection;
 import eu.europeana.api.client.exception.TechnicalRuntimeException;
 import eu.europeana.api.client.search.common.EuropeanaOperators;
 
 /**
- * The EuropeanaQuery is an encapsulated query to a EuropeanaConnection object.
+ * Encapsulated query builder for the Europeana Search API (v2).
  *
  * @author Andres Viedma Pelaez
  * @author Sergiu Gordea
@@ -272,31 +273,40 @@ public class EuropeanaQuery implements EuropeanaQueryInterface, EuropeanaOperato
         	this.addSearchField(buf, "what", this.whatTerms, false, false, true);
 	}
 
-    public String getQueryUrl(EuropeanaConnection connection) throws UnsupportedEncodingException {
+    public String getQueryUrl(BaseApiConnection connection) throws UnsupportedEncodingException {
         return getQueryUrl(connection, EuropeanaComplexQuery.DEFAULT_OFFSET);
     }
 
-    public String getQueryUrl(EuropeanaConnection connection, long offset) throws UnsupportedEncodingException {
+    public String getQueryUrl(BaseApiConnection connection, long offset) throws UnsupportedEncodingException {
         return getQueryUrl(connection, 12, offset);
     }
     
     
-    public String getQueryUrl(EuropeanaConnection connection, String cursor, int rows) throws UnsupportedEncodingException {
-	   throw new RuntimeException("Operation not supported");
+    public String getQueryUrl(BaseApiConnection connection, String cursor, int rows) throws UnsupportedEncodingException {
+	   throw new UnsupportedOperationException("Cursor pagination requires Api2Query");
 	}
 
     
-    public String getQueryUrl(EuropeanaConnection connection, long limit, long offset) throws UnsupportedEncodingException {
-        connection.setEuropeanaUri("http://api.europeana.eu/api/opensearch.json");
-        StringBuilder url = new StringBuilder();
-        url.append(connection).append("?searchTerms=");
-        String searchTerms = getSearchTerms();
-        url.append(searchTerms);
-        url.append("&rows=").append(limit);
-        url.append("&startPage=").append(offset);
-        url.append("&wskey=").append(connection.getApiKey());
-        return url.toString();
+    public String getQueryUrl(BaseApiConnection connection, long limit, long offset) throws UnsupportedEncodingException {
+		StringBuilder url = buildBaseSearchUrl(connection);
+		url.append("query=").append(getSearchTerms());
+		if (limit > 0)
+			url.append("&rows=").append(limit);
+		if (offset > 0)
+			url.append("&start=").append(offset);
+		return url.toString();
     }
+
+	protected StringBuilder buildBaseSearchUrl(BaseApiConnection connection) {
+		StringBuilder url = new StringBuilder();
+		url.append(connection.getEuropeanaUri());
+		url.append(ClientConfiguration.getInstance().getSearchUrn());
+		url.append("?wskey=").append(connection.getApiKey());
+		if (getProfile() != null)
+			url.append("&profile=").append(getProfile());
+		url.append("&");
+		return url;
+	}
        
     protected void addSearchField(StringBuffer buf, String field, String value) {
         this.addSearchField(buf, field, value, false, false, true);

@@ -3,7 +3,7 @@ package eu.europeana.api.client.search.query;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-import eu.europeana.api.client.connection.EuropeanaConnection;
+import eu.europeana.api.client.connection.BaseApiConnection;
 
 /**
  * Standard interface for Europeana queries.
@@ -21,7 +21,7 @@ public interface EuropeanaQueryInterface {
 	/**
      * Returns the Europeana search terms query string
      * 
-     * @return the searchTerms argument of the url
+     * @return the query argument of the url
      */
     public String getSearchTerms();
 
@@ -32,7 +32,7 @@ public interface EuropeanaQueryInterface {
      * @return string representing the query URL of a search.
      * @throws UnsupportedEncodingException 
      */
-    public String getQueryUrl(EuropeanaConnection connection) throws UnsupportedEncodingException;
+    public String getQueryUrl(BaseApiConnection connection) throws UnsupportedEncodingException;
 
     /**
      * Returns the full Europeana query url
@@ -42,7 +42,7 @@ public interface EuropeanaQueryInterface {
      * @return string representing the query URL of a search.
      * @throws UnsupportedEncodingException 
      */
-    public String getQueryUrl(EuropeanaConnection connection, long offset) throws UnsupportedEncodingException;
+    public String getQueryUrl(BaseApiConnection connection, long offset) throws UnsupportedEncodingException;
     
     /**
      * Returns the full Europeana query url
@@ -53,7 +53,7 @@ public interface EuropeanaQueryInterface {
      * @return string representing the query URL of a search.
      * @throws UnsupportedEncodingException 
      */
-    public String getQueryUrl(EuropeanaConnection connection, long limit, long offset) throws UnsupportedEncodingException;
+    public String getQueryUrl(BaseApiConnection connection, long limit, long offset) throws UnsupportedEncodingException;
     
     
     /**
@@ -65,7 +65,7 @@ public interface EuropeanaQueryInterface {
      * @return
      * @throws UnsupportedEncodingException
      */
-    public String getQueryUrl(EuropeanaConnection connection, String cursor, int rows) throws UnsupportedEncodingException;
+    public String getQueryUrl(BaseApiConnection connection, String cursor, int rows) throws UnsupportedEncodingException;
     
     
     /**

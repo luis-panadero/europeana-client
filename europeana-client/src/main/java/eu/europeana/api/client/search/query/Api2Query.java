@@ -4,8 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.europeana.api.client.config.ClientConfiguration;
-import eu.europeana.api.client.connection.EuropeanaConnection;
+import eu.europeana.api.client.connection.BaseApiConnection;
 import eu.europeana.api.client.search.common.EuropeanaFields;
 
 /**
@@ -52,9 +51,9 @@ public class Api2Query extends EuropeanaQuery implements Api2QueryInterface {
 	@Override
 	/*
 	 * (non-Javadoc)
-	 * @see eu.europeana.api.client.EuropeanaQuery#getQueryUrl(eu.europeana.api.client.EuropeanaConnection, long, long)
+	 * @see eu.europeana.api.client.search.query.EuropeanaQuery#getQueryUrl(eu.europeana.api.client.connection.BaseApiConnection, long, long)
 	 */
-	public String getQueryUrl(EuropeanaConnection connection, long limit,
+	public String getQueryUrl(BaseApiConnection connection, long limit,
 			long offset) throws UnsupportedEncodingException {
 				
 		StringBuilder url = buildBaseSearchUrl(connection);
@@ -77,23 +76,10 @@ public class Api2Query extends EuropeanaQuery implements Api2QueryInterface {
 			appendQueryRefinements(url);			
 		}
 	}
-
-	private StringBuilder buildBaseSearchUrl(EuropeanaConnection connection) {
-		StringBuilder url = new StringBuilder();
-		url.append(connection.getEuropeanaUri());
-        url.append(ClientConfiguration.getInstance().getSearchUrn());
-        url.append("?wskey=").append(connection.getApiKey());
-		
-        if(getProfile()!= null)
-			url.append("&profile=").append(getProfile());
-		
-        url.append("&");
-		return url;
-	}
 	
 	
 	@Override
-	public String getQueryUrl(EuropeanaConnection connection, String cursor, int rows) throws UnsupportedEncodingException {
+	public String getQueryUrl(BaseApiConnection connection, String cursor, int rows) throws UnsupportedEncodingException {
 		 
 		 StringBuilder url = buildBaseSearchUrl(connection);
 		 appendSearchQueryParams(url);
@@ -102,8 +88,6 @@ public class Api2Query extends EuropeanaQuery implements Api2QueryInterface {
 		 if(rows >= 0)
 			 url.append("&rows=").append(rows);
 		 
-		 //url.append("&sort=id asc");
-				
 		return url.toString();
 	}
 	 
@@ -129,9 +113,6 @@ public class Api2Query extends EuropeanaQuery implements Api2QueryInterface {
         }
         
         buf.append("&qf=");
-        
-//        if(facetField != null && !facetField.trim().isEmpty())
-//        	buf.append(facetField).append(IS);
         
         buf.append(encodeSearchValue(qf));
 	}

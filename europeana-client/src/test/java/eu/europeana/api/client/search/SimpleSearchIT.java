@@ -40,7 +40,7 @@ public class SimpleSearchIT extends BaseSearchUtils{
 
         //check item count
         final int DEFAULT_PAGE_SIZE = 12;
-        assertTrue(res.getItemCount() ==  DEFAULT_PAGE_SIZE);
+        assertTrue(res.getItemsCount() ==  DEFAULT_PAGE_SIZE);
         
         //check total items. Should be more that one page for sure
         assertTrue(res.getTotalResults() >  DEFAULT_PAGE_SIZE);
@@ -70,7 +70,7 @@ public class SimpleSearchIT extends BaseSearchUtils{
         long t = System.currentTimeMillis() - ms0;
         System.out.println("response time (client+server): " + (t / 1000d) + " seconds");
 
-        assertTrue(res.getItemCount() ==  RESULTS_SIZE);
+        assertTrue(res.getItemsCount() ==  RESULTS_SIZE);
         
         int count = 0;
         for (EuropeanaApi2Item item : res.getAllItems()) {

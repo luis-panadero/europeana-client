@@ -64,4 +64,23 @@ class EuropeanaQuerySpec extends Specification {
         expect:
         query.getQueryString() == query.getSearchTerms()
     }
+
+    def "getQueryUrl builds Search API v2 URL"() {
+        given:
+        def connection = new eu.europeana.api.client.connection.BaseApiConnection(
+                'https://api.europeana.eu/api/v2/', 'TESTKEY')
+        def query = new EuropeanaQuery()
+        query.setWhatTerms('building')
+
+        when:
+        String url = query.getQueryUrl(connection, 12, 1)
+
+        then:
+        url.startsWith('https://api.europeana.eu/api/v2/search.json?wskey=TESTKEY&query=')
+        url.contains('&rows=12')
+        url.contains('&start=1')
+        !url.contains('opensearch')
+        !url.contains('searchTerms=')
+        !url.contains('startPage=')
+    }
 }
