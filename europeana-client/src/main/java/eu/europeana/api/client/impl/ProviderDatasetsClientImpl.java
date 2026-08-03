@@ -9,6 +9,7 @@ import com.google.gson.JsonSyntaxException;
 
 import eu.europeana.api.client.ProviderDatasetsClient;
 import eu.europeana.api.client.connection.BaseApiConnection;
+import eu.europeana.api.client.connection.HttpConnector;
 import eu.europeana.api.client.exception.EuropeanaApiProblem;
 import eu.europeana.api.client.exception.TechnicalRuntimeException;
 import eu.europeana.api.client.model.ProviderAccessResponse;
@@ -32,6 +33,13 @@ public class ProviderDatasetsClientImpl extends BaseApiConnection implements
 	}
 
 	/**
+	 * Default configuration with an explicit HTTP transport.
+	 */
+	public ProviderDatasetsClientImpl(HttpConnector httpConnection) {
+		super(httpConnection);
+	}
+
+	/**
 	 * Constructor which provides new strings for the search URI and and the API
 	 * key.
 	 * 
@@ -42,6 +50,14 @@ public class ProviderDatasetsClientImpl extends BaseApiConnection implements
 	 */
 	public ProviderDatasetsClientImpl(String baseApiUri, String apiKey) {
 		super(baseApiUri, apiKey);
+	}
+
+	/**
+	 * Constructor with base URI, API key and an explicit HTTP transport.
+	 */
+	public ProviderDatasetsClientImpl(String baseApiUri, String apiKey,
+			HttpConnector httpConnection) {
+		super(baseApiUri, apiKey, httpConnection);
 	}
 
 	@Override

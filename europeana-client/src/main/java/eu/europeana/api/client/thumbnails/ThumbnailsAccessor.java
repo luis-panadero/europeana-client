@@ -140,7 +140,7 @@ public class ThumbnailsAccessor extends MetadataAccessor{
 
 				//String mime = "image";
 				String mime = null;
-				this.http.silentWriteURLContent(thumbnailUrl, out, mime);
+				this.requireHttpConnection().silentWriteURLContent(thumbnailUrl, out, mime);
 			}
 		} catch (IOException e) {
 			log.warn("Cannot write file to disk!", e);

@@ -14,7 +14,7 @@ public class BaseApiConnection {
 
 	private String apiKey;
 	private String baseServiceUri = "";
-	private HttpConnector httpConnection = new HttpConnector();
+	private HttpConnector httpConnection;
 	protected Logger logger = LoggerFactory.getLogger(getClass().getName());
 
 	public String getApiKey() {
@@ -70,6 +70,14 @@ public class BaseApiConnection {
 	}
 
 	/**
+	 * Create a new connection with an explicit HTTP transport.
+	 */
+	public BaseApiConnection(String baseServiceUri, String apiKey, HttpConnector httpConnection) {
+		this(baseServiceUri, apiKey);
+		this.httpConnection = httpConnection;
+	}
+
+	/**
 	 * Create a new connection to the Annotation Service (REST API) using the default configuration in the properties files
 	 */
 	public BaseApiConnection() {
@@ -78,15 +86,32 @@ public class BaseApiConnection {
 				ClientConfiguration.getInstance().getApiKey());
 	}
 
+	/**
+	 * Create a new connection using the default configuration and an explicit HTTP transport.
+	 */
+	public BaseApiConnection(HttpConnector httpConnection) {
+		this();
+		this.httpConnection = httpConnection;
+	}
+
 	protected String getJSONResult(String url) throws IOException {
 		logger.trace("Call to Annotation API (GET): " + url);
-		return getHttpConnection().getURLContent(url);
+		return requireHttpConnection().getURLContent(url);
 	}
 
 	protected String getJSONResult(String url, String paramName, String jsonPost)
 			throws IOException {
 		logger.trace("Call to Annotation API (POST): " + url);
 		
-		return getHttpConnection().getURLContent(url, paramName, jsonPost);
+		return requireHttpConnection().getURLContent(url, paramName, jsonPost);
+	}
+
+	private HttpConnector requireHttpConnection() {
+		if (httpConnection == null) {
+			throw new IllegalStateException(
+					"HttpConnector is not configured. Inject one via setHttpConnection(...) "
+							+ "or a constructor that accepts HttpConnector.");
+		}
+		return httpConnection;
 	}
 }

@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.Test;
 
 import eu.europeana.api.client.EuropeanaApi2Client;
+import eu.europeana.api.client.connection.ApacheHttpConnectors;
 import eu.europeana.api.client.exception.EuropeanaApiProblem;
 import eu.europeana.api.client.search.query.Api2Query;
 import eu.europeana.api.client.search.query.EuropeanaQueryInterface;
@@ -18,7 +19,8 @@ public class ThumbnailsAccessorIT {
 	@Test
 	public void testCopyThumbnails() throws IOException, EuropeanaApiProblem {
 	
-		ThumbnailsAccessor ta = new ThumbnailsAccessor(new EuropeanaApi2Client());
+		ThumbnailsAccessor ta = new ThumbnailsAccessor(
+				new EuropeanaApi2Client(ApacheHttpConnectors.create()));
 		EuropeanaQueryInterface query = new Api2Query();
 		query.setType("IMAGE");
 		query.setGeneralTerms("da vinci");

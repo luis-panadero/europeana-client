@@ -9,6 +9,7 @@ import java.net.URL;
 import org.junit.Test;
 import org.junit.runner.JUnitCore;
 
+import eu.europeana.api.client.connection.ApacheHttpConnectors;
 import eu.europeana.api.client.dataset.EuClientDatasetUtil;
 import eu.europeana.api.client.thumbnails.download.ThumbnailDownloader;
 import eu.europeana.api.client.thumbnails.processing.LargeThumbnailsetProcessing;
@@ -34,7 +35,9 @@ public class DownloadThumbnailsIT extends
 		File downloadFolder = getDatasetImageFolder();
 
 		LargeThumbnailsetProcessing datasetDownloader = new LargeThumbnailsetProcessing(datasetFile);
-		datasetDownloader.addObserver(new ThumbnailDownloader(downloadFolder));
+		ThumbnailDownloader downloader = new ThumbnailDownloader(downloadFolder);
+		downloader.setHttpConnection(ApacheHttpConnectors.create());
+		datasetDownloader.addObserver(downloader);
 		datasetDownloader.processThumbnailset(0, -1, 1000);
 //		datasetDownloader.processThumbnailset(0, 21, 10);
 

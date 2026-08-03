@@ -8,6 +8,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import eu.europeana.api.client.EuropeanaApi2Client;
+import eu.europeana.api.client.connection.ApacheHttpConnectors;
 import eu.europeana.api.client.exception.EuropeanaApiProblem;
 import eu.europeana.api.client.model.EuropeanaApi2Results;
 import eu.europeana.api.client.model.search.EuropeanaApi2Item;
@@ -26,7 +27,7 @@ public class SearchRefinementsIT {
 		europeanaQuery.addQueryRefinement("NOT gips");
 		europeanaQuery.addQueryRefinement("NOT capitel");
 
-		EuropeanaApi2Client europeanaClient = new EuropeanaApi2Client();
+		EuropeanaApi2Client europeanaClient = new EuropeanaApi2Client(ApacheHttpConnectors.create());
 		final int RESULTS_SIZE = 1;
 		final int OFFSET = 1;
 		String queryUrl = europeanaQuery.getQueryUrl(europeanaClient,

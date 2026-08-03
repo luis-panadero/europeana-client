@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.JUnitCore;
 
 import eu.europeana.api.client.EuropeanaApi2Client;
+import eu.europeana.api.client.connection.ApacheHttpConnectors;
 import eu.europeana.api.client.dataset.EuClientDatasetUtil;
 
 public class DownloadFullObjectsIT extends
@@ -39,7 +40,7 @@ public class DownloadFullObjectsIT extends
 		if(!datasetFile.exists())
 			fail("required dataset file doesn't exist" + datasetFile);
 		
-		EuropeanaApi2Client client = new EuropeanaApi2Client();
+		EuropeanaApi2Client client = new EuropeanaApi2Client(ApacheHttpConnectors.create());
 		
 		LineIterator iterator = FileUtils.lineIterator(datasetFile);
 		String line;

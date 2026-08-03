@@ -7,6 +7,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import eu.europeana.api.client.EuropeanaApi2Client;
+import eu.europeana.api.client.connection.ApacheHttpConnectors;
 import eu.europeana.api.client.exception.EuropeanaApiProblem;
 import eu.europeana.api.client.model.EuropeanaApi2Results;
 import eu.europeana.api.client.model.search.EuropeanaApi2Item;
@@ -31,7 +32,7 @@ public class SimpleSearchIT extends BaseSearchUtils{
         europeanaQuery.setNotProvider("Hispana");
         
         //perform search
-        EuropeanaApi2Client europeanaClient = new EuropeanaApi2Client();
+        EuropeanaApi2Client europeanaClient = new EuropeanaApi2Client(ApacheHttpConnectors.create());
         EuropeanaApi2Results res = europeanaClient.searchApi2(europeanaQuery, -1, 1);
         
         //print out response time
@@ -62,7 +63,7 @@ public class SimpleSearchIT extends BaseSearchUtils{
         europeanaQuery.setTitle("vooravond");
         
         //perform search
-        EuropeanaApi2Client europeanaClient = new EuropeanaApi2Client();
+        EuropeanaApi2Client europeanaClient = new EuropeanaApi2Client(ApacheHttpConnectors.create());
         final int RESULTS_SIZE = 5;
 		EuropeanaApi2Results res = europeanaClient.searchApi2(europeanaQuery, RESULTS_SIZE, 0);
 

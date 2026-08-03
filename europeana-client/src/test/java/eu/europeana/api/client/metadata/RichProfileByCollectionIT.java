@@ -8,6 +8,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import eu.europeana.api.client.connection.ApacheHttpConnectors;
 import eu.europeana.api.client.dataset.EuClientDatasetUtil;
 import eu.europeana.api.client.exception.EuropeanaApiProblem;
 import eu.europeana.api.client.model.search.CommonMetadata;
@@ -42,6 +43,7 @@ public class RichProfileByCollectionIT extends EuClientDatasetUtil {
 		Api2QueryInterface apiQuery = new Api2Query(collectionId + "_*");
 		apiQuery.setProfile("rich");
 		MetadataAccessor ma = new MetadataAccessor(apiQuery, null);
+		ma.setHttpConnection(ApacheHttpConnectors.create());
 		//metadata folder is set through configuration
 		//ma.setMetadataFolder("/tmp/europeana/collections/metadata/");
 		ma.setStoreBlockwiseAsJson(true);

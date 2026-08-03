@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 
 import eu.europeana.api.client.config.ClientConfiguration;
 import eu.europeana.api.client.connection.BaseApiConnection;
+import eu.europeana.api.client.connection.HttpConnector;
 import eu.europeana.api.client.exception.EuropeanaApiProblem;
 import eu.europeana.api.client.model.EuropeanaApi2Results;
 import eu.europeana.api.client.model.EuropeanaObjectResponse;
@@ -52,6 +53,13 @@ public class EuropeanaApi2Client extends BaseApiConnection {
 	}
 
 	/**
+	 * Default configuration with an explicit HTTP transport.
+	 */
+	public EuropeanaApi2Client(HttpConnector httpConnection) {
+		super(httpConnection);
+	}
+
+	/**
 	 * Constructor which provides new strings for the search URI and and the API
 	 * key.
 	 * 
@@ -62,6 +70,14 @@ public class EuropeanaApi2Client extends BaseApiConnection {
 	 */
 	public EuropeanaApi2Client(String europeanaSearchUri, String apiKey) {
 		super(europeanaSearchUri, apiKey);
+	}
+
+	/**
+	 * Constructor with search URI, API key and an explicit HTTP transport.
+	 */
+	public EuropeanaApi2Client(String europeanaSearchUri, String apiKey,
+			HttpConnector httpConnection) {
+		super(europeanaSearchUri, apiKey, httpConnection);
 	}
 
 	/**

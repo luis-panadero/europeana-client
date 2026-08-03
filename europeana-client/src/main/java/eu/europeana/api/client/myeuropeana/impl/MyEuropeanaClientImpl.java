@@ -12,6 +12,7 @@ import eu.europeana.api.client.MyEuropeanaClient;
 import eu.europeana.api.client.config.ClientConfiguration;
 import eu.europeana.api.client.config.EuropeanaApiConfiguration;
 import eu.europeana.api.client.connection.BaseApiConnection;
+import eu.europeana.api.client.connection.HttpConnector;
 import eu.europeana.api.client.exception.TechnicalRuntimeException;
 import eu.europeana.api.client.myeuropeana.exception.MyEuropeanaApiException;
 import eu.europeana.api.client.myeuropeana.response.TagsApiResponse;
@@ -29,11 +30,22 @@ public class MyEuropeanaClientImpl extends BaseApiConnection implements
 		getConfiguration();
 	}
 
+	public MyEuropeanaClientImpl(String myEuropeanaServiceUri, String apiKey,
+			HttpConnector httpConnection) {
+		super(myEuropeanaServiceUri, apiKey, httpConnection);
+		getConfiguration();
+	}
+
 	public MyEuropeanaClientImpl() {
 		this(null, null);
 		// initialize attributes
 		setApiKey(getConfiguration().getApiKey());
 		setServiceUri(getConfiguration().getEuropeanaUri());
+	}
+
+	public MyEuropeanaClientImpl(HttpConnector httpConnection) {
+		this();
+		setHttpConnection(httpConnection);
 	}
 
 	@Override

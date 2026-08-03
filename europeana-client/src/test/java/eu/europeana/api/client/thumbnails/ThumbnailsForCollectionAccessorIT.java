@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import eu.europeana.api.client.connection.ApacheHttpConnectors;
 import eu.europeana.api.client.exception.EuropeanaApiProblem;
 
 public class ThumbnailsForCollectionAccessorIT extends ThumbnailAccessorUtils{
@@ -15,6 +16,7 @@ public class ThumbnailsForCollectionAccessorIT extends ThumbnailAccessorUtils{
 	public void testGetThumbnailsForCollectionLimit() throws IOException, EuropeanaApiProblem {
 		ThumbnailsForCollectionAccessor tca = new ThumbnailsForCollectionAccessor(
 				TEST_COLLECTION_NAME);
+		tca.setHttpConnection(ApacheHttpConnectors.create());
 		//201 = 2* 100 +1  
 		int resultsSize = (2 * ThumbnailsAccessor.DEFAULT_BLOCKSIZE) + 1;
 		//start at second page
@@ -39,6 +41,7 @@ public class ThumbnailsForCollectionAccessorIT extends ThumbnailAccessorUtils{
 	public void testGetThumbnailsForCollectionAll() throws IOException, EuropeanaApiProblem {
 		ThumbnailsForCollectionAccessor tca = new ThumbnailsForCollectionAccessor(
 				DEVELOPMENT_COLLECTION_NAME);
+		tca.setHttpConnection(ApacheHttpConnectors.create());
 		int resultsSize = -1;
 		Map<String, String> thumbnails = tca.getThumbnailsForCollection(0,
 				resultsSize, ThumbnailsAccessor.ERROR_POLICY_RETHROW);

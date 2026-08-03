@@ -12,6 +12,7 @@ import java.util.Map;
 
 import javax.naming.OperationNotSupportedException;
 
+import eu.europeana.api.client.connection.ApacheHttpConnectors;
 import eu.europeana.api.client.dataset.DatasetDescriptor;
 import eu.europeana.api.client.dataset.EuClientDatasetUtil;
 import eu.europeana.api.client.exception.EuropeanaApiProblem;
@@ -62,6 +63,7 @@ public class ThumbnailAccessorUtils extends EuClientDatasetUtil {
 
 		ThumbnailsForCollectionAccessor tca = new ThumbnailsForCollectionAccessor(
 				query, null);
+		tca.setHttpConnection(ApacheHttpConnectors.create());
 		tca.setQuery(query);
 		//store json files if needed
 		tca.setStoreItemsAsJson(dataset.isStoreItemPreview());

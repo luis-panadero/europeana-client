@@ -9,6 +9,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import eu.europeana.api.client.EuropeanaApi2Client;
+import eu.europeana.api.client.connection.ApacheHttpConnectors;
 import eu.europeana.api.client.exception.EuropeanaApiProblem;
 import eu.europeana.api.client.model.EuropeanaApi2Results;
 import eu.europeana.api.client.model.search.EuropeanaApi2Item;
@@ -19,7 +20,7 @@ public class ObjectRetrievalIT {
 
 	@Test
 	public void test() throws IOException, EuropeanaApiProblem {
-		EuropeanaApi2Client ec = new EuropeanaApi2Client();
+		EuropeanaApi2Client ec = new EuropeanaApi2Client(ApacheHttpConnectors.create());
 		Api2Query query = new Api2Query();
 		
 		query.setCollectionName("2020706_*");
@@ -36,7 +37,7 @@ public class ObjectRetrievalIT {
 	
 	@Test
 	public void testCompleteObject() throws IOException, EuropeanaApiProblem {
-		EuropeanaApi2Client ec = new EuropeanaApi2Client();
+		EuropeanaApi2Client ec = new EuropeanaApi2Client(ApacheHttpConnectors.create());
 		Api2Query query = new Api2Query();
 		query.setGeneralTerms("europeana_completeness:10");
 		

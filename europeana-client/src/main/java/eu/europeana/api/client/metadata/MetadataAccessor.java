@@ -28,7 +28,7 @@ import eu.europeana.api.client.thumbnails.ThumbnailsAccessor;
 public class MetadataAccessor {
 
 	protected static final Logger log = LoggerFactory.getLogger(ThumbnailsAccessor.class);
-	protected HttpConnector http = new HttpConnector();
+	protected HttpConnector http;
 	protected EuropeanaApi2Client europeanaClient;
 	private boolean skipExistingFiles = true;
 	private int metadataItems = 0;
@@ -62,7 +62,30 @@ public class MetadataAccessor {
 		else
 			this.europeanaClient = new EuropeanaApi2Client();
 
+		if (this.europeanaClient.getHttpConnection() != null) {
+			this.http = this.europeanaClient.getHttpConnection();
+		}
+
 		reset(query);
+	}
+
+	public HttpConnector getHttpConnection() {
+		return http;
+	}
+
+	public void setHttpConnection(HttpConnector httpConnection) {
+		this.http = httpConnection;
+		if (europeanaClient != null) {
+			europeanaClient.setHttpConnection(httpConnection);
+		}
+	}
+
+	protected HttpConnector requireHttpConnection() {
+		if (http == null) {
+			throw new IllegalStateException(
+					"HttpConnector is not configured. Inject one via setHttpConnection(...)");
+		}
+		return http;
 	}
 
 	void reset(Api2QueryInterface query) {

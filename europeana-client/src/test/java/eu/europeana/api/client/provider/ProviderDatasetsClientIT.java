@@ -11,6 +11,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import eu.europeana.api.client.ProviderDatasetsClient;
+import eu.europeana.api.client.connection.ApacheHttpConnectors;
 import eu.europeana.api.client.exception.EuropeanaApiProblem;
 import eu.europeana.api.client.impl.ProviderDatasetsClientImpl;
 import eu.europeana.api.client.model.provider.Provider;
@@ -22,7 +23,7 @@ public class ProviderDatasetsClientIT {
 	
 	@Test
 	public void getProviders() throws IOException, EuropeanaApiProblem{
-		ProviderDatasetsClient client = new ProviderDatasetsClientImpl();
+		ProviderDatasetsClient client = new ProviderDatasetsClientImpl(ApacheHttpConnectors.create());
 		List<Provider> providers = client.getProvidersList();
 		assertNotNull(providers);
 		assertTrue(providers.size() > 5);
@@ -42,7 +43,7 @@ public class ProviderDatasetsClientIT {
 		
 		@Test
 		public void getProvidersWithLimitAndPageSize() throws IOException, EuropeanaApiProblem{
-			ProviderDatasetsClient client = new ProviderDatasetsClientImpl();
+			ProviderDatasetsClient client = new ProviderDatasetsClientImpl(ApacheHttpConnectors.create());
 			
 			List<Provider> providers  = client.getProvidersList(-1, 3, null);
 			assertNotNull(providers);

@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.Test;
 
 import eu.europeana.api.client.EuropeanaApi2Client;
+import eu.europeana.api.client.connection.ApacheHttpConnectors;
 import eu.europeana.api.client.exception.EuropeanaApiProblem;
 import eu.europeana.api.client.model.EuropeanaApi2Results;
 import eu.europeana.api.client.model.search.EuropeanaApi2Item;
@@ -43,7 +44,7 @@ public class ComplexSearchIT {
          europeanaQuery.setType(EuropeanaComplexQuery.TYPE.TEXT);
          
          //invoke the search api
-         EuropeanaApi2Client europeanaClient = new EuropeanaApi2Client();
+         EuropeanaApi2Client europeanaClient = new EuropeanaApi2Client(ApacheHttpConnectors.create());
          final int FECTHED_RESULTS_COUNT = 20;
 		EuropeanaApi2Results res = europeanaClient.searchApi2(europeanaQuery, FECTHED_RESULTS_COUNT, 0);
          
