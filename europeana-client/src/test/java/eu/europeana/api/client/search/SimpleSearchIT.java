@@ -18,7 +18,7 @@ import eu.europeana.api.client.search.query.EuropeanaComplexQuery;
  * @author GordeaS
  *
  */
-public class SimpleSearchTest extends BaseSearchUtils{
+public class SimpleSearchIT extends BaseSearchUtils{
 
 	@Test
 	public void testSimpleSearch() throws IOException, EuropeanaApiProblem{

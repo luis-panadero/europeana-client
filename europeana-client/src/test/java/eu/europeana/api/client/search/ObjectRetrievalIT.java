@@ -13,7 +13,7 @@ import eu.europeana.api.client.model.search.EuropeanaApi2Item;
 import eu.europeana.api.client.model.search.EuropeanaObject;
 import eu.europeana.api.client.search.query.Api2Query;
 
-public class ObjectRetrievalTest {
+public class ObjectRetrievalIT {
 
 	@Test
 	public void test() throws IOException, EuropeanaApiProblem {

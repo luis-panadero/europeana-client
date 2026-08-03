@@ -14,7 +14,7 @@ import eu.europeana.api.client.EuropeanaApi2Client;
 import eu.europeana.api.client.dataset.EuClientDatasetUtil;
 import eu.europeana.api.client.metadata.MetadataAccessor;
 
-public class DownloadFullObjectsTest extends
+public class DownloadFullObjectsIT extends
 		EuClientDatasetUtil {
 
 	String EUROPEANA_ID_LIST_CSV = "overview.csv"; 
@@ -25,7 +25,7 @@ public class DownloadFullObjectsTest extends
 	//support running the test as stand alone class
 	public static void main(String[] args) throws Exception {                    
 		parseParams(args);      
-		JUnitCore.main(DownloadFullObjectsTest.class.getCanonicalName());            
+		JUnitCore.main(DownloadFullObjectsIT.class.getCanonicalName());            
 	}
 	
 	

@@ -10,7 +10,7 @@ import eu.europeana.api.client.EuropeanaApi2Client;
 import eu.europeana.api.client.exception.EuropeanaApiProblem;
 import eu.europeana.api.client.model.EuropeanaApi2Results;
 
-public class PortalAndApiSearchTest extends BaseSearchUtils{
+public class PortalAndApiSearchIT extends BaseSearchUtils{
 
 	@Test
 	public void testSearchByPortalUrl() throws IOException, EuropeanaApiProblem{

@@ -16,7 +16,7 @@ import eu.europeana.api.client.search.query.EuropeanaComplexQuery;
 import eu.europeana.api.client.search.query.adv.EuropeanaOperand;
 import eu.europeana.api.client.search.query.adv.EuropeanaSearchTerm;
 
-public class ComplexSearchTest {
+public class ComplexSearchIT {
 
 	@Test
 	public void testComplexSearch() throws IOException{

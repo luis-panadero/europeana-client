@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import eu.europeana.api.client.exception.EuropeanaApiProblem;
 
-public class ThumbnailsForCollectionAccessorTest extends ThumbnailAccessorUtils{
+public class ThumbnailsForCollectionAccessorIT extends ThumbnailAccessorUtils{
 
 	@Test
 	public void testGetThumbnailsForCollectionLimit() throws IOException, EuropeanaApiProblem {

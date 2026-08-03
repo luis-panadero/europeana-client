@@ -11,7 +11,7 @@ import eu.europeana.api.client.dataset.EuClientDatasetUtil;
 import eu.europeana.api.client.thumbnails.download.ThumbnailDownloader;
 import eu.europeana.api.client.thumbnails.processing.LargeThumbnailsetProcessing;
 
-public class DownloadThumbnailsTest extends
+public class DownloadThumbnailsIT extends
 		EuClientDatasetUtil {
 
 	// public static String CLASS_WW1 = "ww1";
@@ -19,7 +19,7 @@ public class DownloadThumbnailsTest extends
 	//support running the test as stand alone class
 	public static void main(String[] args) throws Exception {                    
 		parseParams(args);      
-		JUnitCore.main(DownloadThumbnailsTest.class.getCanonicalName());            
+		JUnitCore.main(DownloadThumbnailsIT.class.getCanonicalName());            
 	}
 	
 	

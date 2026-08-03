@@ -14,7 +14,7 @@ import eu.europeana.api.client.exception.EuropeanaApiProblem;
 import eu.europeana.api.client.impl.ProviderDatasetsClientImpl;
 import eu.europeana.api.client.model.provider.Provider;
 
-public class ProviderDatasetsClientTest {
+public class ProviderDatasetsClientIT {
 
 	Logger log = LoggerFactory.getLogger(getClass());
 	

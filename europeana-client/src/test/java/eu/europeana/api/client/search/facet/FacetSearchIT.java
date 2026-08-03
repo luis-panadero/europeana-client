@@ -15,7 +15,7 @@ import eu.europeana.api.client.exception.EuropeanaApiProblem;
 import eu.europeana.api.client.model.EuropeanaApi2Results;
 import eu.europeana.api.client.search.query.Api2Query;
 
-public class FacetSearchTest {
+public class FacetSearchIT {
 	
 
 	@Test
