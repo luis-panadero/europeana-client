@@ -100,7 +100,11 @@ public class EuropeanaConnection {
             } else {
                 res.acumulate(res2);
             }
-            offset += res2.getItemsCount();
+            long pageItems = res2.getItemsCount();
+            if (pageItems == 0) {
+                break;
+            }
+            offset += pageItems;
             
         } while (res.getItemsCount() < limit);
         
