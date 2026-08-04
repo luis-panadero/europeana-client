@@ -1,14 +1,12 @@
 # Europeana-Client
 
-Java client for the [Europeana Search API v2](https://pro.europeana.eu/page/search).
+Java client for the [Europeana Search API v2](https://www.europeana.eu/en/apis).
 
 Forked from [Europeana4J](https://github.com/baratz-es/europeana4j) (originally [europeana4j on Google Code](http://code.google.com/p/europeana4j/)), mavenized and refactored.
 
 - **Maven module:** `europeana-client/` (`groupId` `baratz.es`, version `0.3.0-SNAPSHOT`)
 - **Java:** 8
 - **Production dependencies:** Gson, SLF4J, commons-io
-
-> Run all Maven commands from the `europeana-client/` directory.
 
 ## Contents
 
