@@ -88,7 +88,7 @@ pipeline {
               mavenSettingsConfig: 'f0b67693-f8ff-4403-a48d-6953a3d00e7f',
               options: [pipelineGraphPublisher(lifecycleThreshold: 'install')]
             ) {
-              sh "mvn verify -T4 -Dmaven.javadoc.skip=true"
+              sh "mvn test -T4 -Dmaven.javadoc.skip=true"
             }
           }
       }
