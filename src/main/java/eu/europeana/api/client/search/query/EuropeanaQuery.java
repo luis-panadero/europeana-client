@@ -222,7 +222,11 @@ public class EuropeanaQuery implements EuropeanaQueryInterface, EuropeanaOperato
     protected void buildSearchQueryString(StringBuffer buf) {
         
         if (this.wholeSubQuery != null && this.wholeSubQuery.trim().length() > 0) {
-            buf.append(this.wholeSubQuery);
+            // wholeSubQuery is a free-form Lucene clause; encode it for use in query=
+            if (buf.length() > 0) {
+                buf.append(encodeSearchValue(EMPTY_SPACE)).append(AND).append(encodeSearchValue(EMPTY_SPACE));
+            }
+            buf.append(encodeSearchValue(this.wholeSubQuery.trim()));
         }
         
         if(getSubQueries() != null){

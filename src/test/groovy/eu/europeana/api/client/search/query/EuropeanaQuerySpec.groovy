@@ -29,12 +29,12 @@ class EuropeanaQuerySpec extends Specification {
         query.getSearchTerms() == 'what%3A(building)'
     }
 
-    def "wholeSubQuery is used as-is when set"() {
+    def "wholeSubQuery is URL-encoded in search terms"() {
         given:
-        def query = new EuropeanaQuery('what:(building)')
+        def query = new EuropeanaQuery('what:(building) AND NOT PROVIDER:Hispana')
 
         expect:
-        query.getSearchTerms() == 'what:(building)'
+        query.getSearchTerms() == 'what%3A%28building%29+AND+NOT+PROVIDER%3AHispana'
     }
 
     def "SubQuery with encode and quotes flags is respected"() {
