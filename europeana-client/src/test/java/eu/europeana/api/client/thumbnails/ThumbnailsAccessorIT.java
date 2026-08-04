@@ -16,19 +16,19 @@ import eu.europeana.api.client.search.query.EuropeanaQueryInterface;
 
 public class ThumbnailsAccessorIT {
 
-	@Test
-	public void testCopyThumbnails() throws IOException, EuropeanaApiProblem {
-	
-		ThumbnailsAccessor ta = new ThumbnailsAccessor(
-				new EuropeanaApi2Client(ApacheHttpConnectors.create()));
-		EuropeanaQueryInterface query = new Api2Query();
-		query.setType("IMAGE");
-		query.setGeneralTerms("da vinci");
-		
-		File tmpFolder = new File("/tmp/europeana/images");
-		
-		List<String> thumbnailsCopied = ta.copyThumbnails(query, tmpFolder, 2);
-		assertEquals(2, thumbnailsCopied.size());
-			
-	}
+    @Test
+    public void testCopyThumbnails() throws IOException, EuropeanaApiProblem {
+    
+        ThumbnailsAccessor ta = new ThumbnailsAccessor(
+                new EuropeanaApi2Client(ApacheHttpConnectors.create()));
+        EuropeanaQueryInterface query = new Api2Query();
+        query.setType("IMAGE");
+        query.setGeneralTerms("da vinci");
+        
+        File tmpFolder = new File("/tmp/europeana/images");
+        
+        List<String> thumbnailsCopied = ta.copyThumbnails(query, tmpFolder, 2);
+        assertEquals(2, thumbnailsCopied.size());
+            
+    }
 }

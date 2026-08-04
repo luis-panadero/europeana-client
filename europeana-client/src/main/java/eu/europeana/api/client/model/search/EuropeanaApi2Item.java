@@ -28,7 +28,7 @@ import eu.europeana.api.client.search.query.EuropeanaComplexQuery;
 public class EuropeanaApi2Item extends CommonMetadata{
 
     protected List<String> title;
-	protected List<String> dcDescription;
+    protected List<String> dcDescription;
     protected String link;
     protected String guid;
     
@@ -213,7 +213,7 @@ public class EuropeanaApi2Item extends CommonMetadata{
      * @return  
      */
     public static Map<String, String> loadJSONMap(Reader json) {
-    	 Gson gson = new Gson();
+         Gson gson = new Gson();
          Type mapType = new TypeToken<HashMap<String, String>>() {
          }.getType();
          return gson.fromJson(json, mapType);
@@ -231,12 +231,12 @@ public class EuropeanaApi2Item extends CommonMetadata{
     }
 
     public List<String> getDcDescription() {
-		return dcDescription;
-	}
+        return dcDescription;
+    }
 
-	public void setDcDescription(List<String> dcDescription) {
-		this.dcDescription = dcDescription;
-	}
+    public void setDcDescription(List<String> dcDescription) {
+        this.dcDescription = dcDescription;
+    }
 
     public String getLink() {
         return link;
@@ -337,127 +337,127 @@ public class EuropeanaApi2Item extends CommonMetadata{
         this.dcCreator = dcCreator;
     }
 
-	public void setEdmTimespanLabel(List<Map<String, String>> edmTimespanLabel) {
-		this.edmTimespanLabel = edmTimespanLabel;
-	}
+    public void setEdmTimespanLabel(List<Map<String, String>> edmTimespanLabel) {
+        this.edmTimespanLabel = edmTimespanLabel;
+    }
 
-	public List<Map<String, String>> getEdmTimespanLabel() {
-		return edmTimespanLabel;
-	}
+    public List<Map<String, String>> getEdmTimespanLabel() {
+        return edmTimespanLabel;
+    }
 
-	public void setEdmConceptLabel(List<Map<String, String>> edmConceptLabel) {
-		this.edmConceptLabel = edmConceptLabel;
-	}
+    public void setEdmConceptLabel(List<Map<String, String>> edmConceptLabel) {
+        this.edmConceptLabel = edmConceptLabel;
+    }
 
-	public List<Map<String, String>> getEdmConceptLabel() {
-		return edmConceptLabel;
-	}
+    public List<Map<String, String>> getEdmConceptLabel() {
+        return edmConceptLabel;
+    }
 
-	public Integer getCompleteness() {
-		return completeness;
-	}
+    public Integer getCompleteness() {
+        return completeness;
+    }
 
-	public void setCompleteness(Integer completeness) {
-		this.completeness = completeness;
-	}
+    public void setCompleteness(Integer completeness) {
+        this.completeness = completeness;
+    }
 
-	public void setEdmPreview(List<String> edmPreview) {
-		this.edmPreview = edmPreview;
-	}
+    public void setEdmPreview(List<String> edmPreview) {
+        this.edmPreview = edmPreview;
+    }
 
-	public List<String> getEdmPreview() {
-		return edmPreview;
-	}
-	
-	/**
-	 * Helper method to retrieve the largest thumbnail in a Europeana item.
-	 * 
-	 * @param item
-	 *            : Europeana item where the thumbnail is searched.
-	 * @return string containing a uri of the largest thumbnail.
-	 */
-	public String getThumbnailLarge() {
-		return getThumbnailOfSize(PARAM_SIZE_LARGE);
-	}
-	
-	public String getThumbnailOfSize(String paramSize) {
+    public List<String> getEdmPreview() {
+        return edmPreview;
+    }
+    
+    /**
+     * Helper method to retrieve the largest thumbnail in a Europeana item.
+     * 
+     * @param item
+     *            : Europeana item where the thumbnail is searched.
+     * @return string containing a uri of the largest thumbnail.
+     */
+    public String getThumbnailLarge() {
+        return getThumbnailOfSize(PARAM_SIZE_LARGE);
+    }
+    
+    public String getThumbnailOfSize(String paramSize) {
 
-		if (getEdmPreview() == null || getEdmPreview().isEmpty()) 
-			return null;
-		
-		String firstValue = getEdmPreview().get(0);
-		if(firstValue.contains(paramSize))
-			return firstValue;
-		else{
-			String ret = getUrlProcessor().removeParam(PARAM_SIZE, firstValue);
-			return ret + paramSize;
-		}
+        if (getEdmPreview() == null || getEdmPreview().isEmpty()) 
+            return null;
+        
+        String firstValue = getEdmPreview().get(0);
+        if(firstValue.contains(paramSize))
+            return firstValue;
+        else{
+            String ret = getUrlProcessor().removeParam(PARAM_SIZE, firstValue);
+            return ret + paramSize;
+        }
 
-		
-	}
+        
+    }
 
-	
-	private String listToString(List<String> list) {
-		String res = "";
-		StringBuilder sb = new StringBuilder();
-		for (String s : list)
-		{
-		    sb.append(s);
-		    sb.append(";");
-		}		
-		res = sb.toString();
-		return res;
-	}
+    
+    private String listToString(List<String> list) {
+        String res = "";
+        StringBuilder sb = new StringBuilder();
+        for (String s : list)
+        {
+            sb.append(s);
+            sb.append(";");
+        }       
+        res = sb.toString();
+        return res;
+    }
 
-	
-	@Override
-	public String getFieldContent(int edmField) {
-		switch (edmField) {
-		case EDM_FIELD_PREVIEW:
-			if (getEdmPreview() != null && !getEdmPreview().isEmpty())
-				return getEdmPreview().get(0);
-			break;
+    
+    @Override
+    public String getFieldContent(int edmField) {
+        switch (edmField) {
+        case EDM_FIELD_PREVIEW:
+            if (getEdmPreview() != null && !getEdmPreview().isEmpty())
+                return getEdmPreview().get(0);
+            break;
 
-		case EDM_FIELD_THUMBNAIL_LARGE:
-				return getThumbnailLarge();
-		
-		case EDM_FIELD_THUMBNAIL_W400:
-			if (getEdmPreview() != null)
-				return getThumbnailOfSize(PARAM_SIZE_W400);
-			break;
-			
-		case EDM_FIELD_IS_SHOWN_BY:
-			if (getEdmIsShownBy() != null && !getEdmIsShownBy().isEmpty())
-				return getEdmIsShownBy().get(0);
-			break;
+        case EDM_FIELD_THUMBNAIL_LARGE:
+                return getThumbnailLarge();
+        
+        case EDM_FIELD_THUMBNAIL_W400:
+            if (getEdmPreview() != null)
+                return getThumbnailOfSize(PARAM_SIZE_W400);
+            break;
+            
+        case EDM_FIELD_IS_SHOWN_BY:
+            if (getEdmIsShownBy() != null && !getEdmIsShownBy().isEmpty())
+                return getEdmIsShownBy().get(0);
+            break;
 
-		case FIELD_TITLE:
-			if (getTitle() != null && !getTitle().isEmpty())
-				return listToString(getTitle());
-			break;
-		
-		case FIELD_DC_DESCRIPTION:
-			if (getDcDescription() != null && !getDcDescription().isEmpty())
-				return listToString(getDcDescription());
-			break;
-		
-		case EDM_OBJECT_URL:
-			if (getLink() != null && !getLink().isEmpty())
-				return getLink();
-			break;
-			
-		case FIELD_DC_CREATOR:
-			if (getDcCreator() != null && !getDcCreator().isEmpty())
-				return listToString(getDcCreator());
-			break;
-		
-		default:
-			throw new IllegalArgumentException(
-					"edmField not supported for content URL extraction: "
-							+ edmField);
-		}
+        case FIELD_TITLE:
+            if (getTitle() != null && !getTitle().isEmpty())
+                return listToString(getTitle());
+            break;
+        
+        case FIELD_DC_DESCRIPTION:
+            if (getDcDescription() != null && !getDcDescription().isEmpty())
+                return listToString(getDcDescription());
+            break;
+        
+        case EDM_OBJECT_URL:
+            if (getLink() != null && !getLink().isEmpty())
+                return getLink();
+            break;
+            
+        case FIELD_DC_CREATOR:
+            if (getDcCreator() != null && !getDcCreator().isEmpty())
+                return listToString(getDcCreator());
+            break;
+        
+        default:
+            throw new IllegalArgumentException(
+                    "edmField not supported for content URL extraction: "
+                            + edmField);
+        }
 
-		return null;// TODO Auto-generated method stub
-	}
+        return null;// TODO Auto-generated method stub
+    }
 
 }

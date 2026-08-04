@@ -8,5 +8,5 @@ import java.io.IOException;
 @FunctionalInterface
 public interface UrlFormPoster {
 
-	String post(String url, String paramName, String paramValue) throws IOException;
+    String post(String url, String paramName, String paramValue) throws IOException;
 }

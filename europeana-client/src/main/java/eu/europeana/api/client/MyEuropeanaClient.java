@@ -12,19 +12,19 @@ import eu.europeana.api.client.myeuropeana.response.TagsApiResponse;
  */
 public interface MyEuropeanaClient {
 
-	public TagsApiResponse parseTagsApiResponse(String json)
-			throws MyEuropeanaApiException;
+    public TagsApiResponse parseTagsApiResponse(String json)
+            throws MyEuropeanaApiException;
 
-	/**
-	 * This method reads the content of the input stream which is expected to be an valid API response and parses it to the
-	 * coresponding data object.
-	 * 
-	 * This method <b>does not</b> close the given input stream 
-	 * @param jsonStream
-	 * @return
-	 * @throws MyEuropeanaApiException
-	 */
-	public TagsApiResponse parseTagsApiResponse(InputStream jsonStream)
-			throws MyEuropeanaApiException;
+    /**
+     * This method reads the content of the input stream which is expected to be an valid API response and parses it to the
+     * coresponding data object.
+     * 
+     * This method <b>does not</b> close the given input stream 
+     * @param jsonStream
+     * @return
+     * @throws MyEuropeanaApiException
+     */
+    public TagsApiResponse parseTagsApiResponse(InputStream jsonStream)
+            throws MyEuropeanaApiException;
 
 }

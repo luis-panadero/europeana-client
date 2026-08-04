@@ -18,7 +18,7 @@ import eu.europeana.api.client.connection.BaseApiConnection;
  */
 public interface EuropeanaQueryInterface {
 
-	/**
+    /**
      * Returns the Europeana search terms query string
      * 
      * @return the query argument of the url
@@ -94,54 +94,54 @@ public interface EuropeanaQueryInterface {
      * 
      * @param generalTerms: string containing general terms.
      */
-	public void setGeneralTerms(String generalTerms);
+    public void setGeneralTerms(String generalTerms);
 
-	/**
-	 * Sets the creator of the query.
-	 * 
-	 * @param creator: string containing query creator.
-	 */
-	public void setCreator(String creator);
+    /**
+     * Sets the creator of the query.
+     * 
+     * @param creator: string containing query creator.
+     */
+    public void setCreator(String creator);
 
-	/**
-	 * Sets the provider of a query.
-	 * 
-	 * @param provider: string containing the provider.
-	 */
-	public void setProvider(String provider);
-	
-	/**
-	 * Sets the data provider of the query.
-	 * 
-	 * @param dataProvider: string containing the data provider.
-	 */
-	public void setDataProvider(String dataProvider);
+    /**
+     * Sets the provider of a query.
+     * 
+     * @param provider: string containing the provider.
+     */
+    public void setProvider(String provider);
+    
+    /**
+     * Sets the data provider of the query.
+     * 
+     * @param dataProvider: string containing the data provider.
+     */
+    public void setDataProvider(String dataProvider);
 
-	/**
-	 * @deprecated use {@link #getSubQueries()}
-	 * @return
-	 */
-	public abstract String getWholeSubQuery();
+    /**
+     * @deprecated use {@link #getSubQueries()}
+     * @return
+     */
+    public abstract String getWholeSubQuery();
 
-	/**
-	 * @deprecated use {@link #addSubQuery(SubQuery)}
-	 * @return
-	 */
-	public abstract void setWholeSubQuery(String wholeSubQuery);
+    /**
+     * @deprecated use {@link #addSubQuery(SubQuery)}
+     * @return
+     */
+    public abstract void setWholeSubQuery(String wholeSubQuery);
 
-	/**
-	 * Subqueries allow usage of search terms in specific search fields
-	 * @param subQuery
-	 */
-	public void addSubQuery(SubQuery subQuery);
+    /**
+     * Subqueries allow usage of search terms in specific search fields
+     * @param subQuery
+     */
+    public void addSubQuery(SubQuery subQuery);
 
-	/**
-	 * Subqueries allow usage of search terms in specific search fields
-	 * @param subQuery
-	 */
-	public List<SubQuery> getSubQueries();
-	
-	public String getProfile();
+    /**
+     * Subqueries allow usage of search terms in specific search fields
+     * @param subQuery
+     */
+    public List<SubQuery> getSubQueries();
+    
+    public String getProfile();
 
-	public void setProfile(String profile);
+    public void setProfile(String profile);
 }

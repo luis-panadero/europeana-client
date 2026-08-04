@@ -8,5 +8,5 @@ import java.io.IOException;
 @FunctionalInterface
 public interface UrlContentGetter {
 
-	String get(String url) throws IOException;
+    String get(String url) throws IOException;
 }

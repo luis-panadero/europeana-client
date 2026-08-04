@@ -21,12 +21,12 @@ import eu.europeana.api.client.search.query.EuropeanaComplexQuery;
  */
 public class SimpleSearchIT extends BaseSearchUtils{
 
-	@Test
-	public void testSimpleSearch() throws IOException, EuropeanaApiProblem{
-		long ms0 = System.currentTimeMillis();
+    @Test
+    public void testSimpleSearch() throws IOException, EuropeanaApiProblem{
+        long ms0 = System.currentTimeMillis();
 
         //create the query object
-		Api2Query europeanaQuery = new Api2Query();
+        Api2Query europeanaQuery = new Api2Query();
         europeanaQuery.setCreator("picasso");
         europeanaQuery.setType(EuropeanaComplexQuery.TYPE.IMAGE);
         europeanaQuery.setNotProvider("Hispana");
@@ -51,21 +51,21 @@ public class SimpleSearchIT extends BaseSearchUtils{
         System.out.println("Query: " + europeanaQuery.getSearchTerms());
         System.out.println("Query url: " + europeanaQuery.getQueryUrl(europeanaClient));
         printSearchResults(res);
-	}
+    }
 
-	@Test
-	public void testSearchInTitle() throws IOException, EuropeanaApiProblem{
-	
-		long ms0 = System.currentTimeMillis();
+    @Test
+    public void testSearchInTitle() throws IOException, EuropeanaApiProblem{
+    
+        long ms0 = System.currentTimeMillis();
 
         //create the query object
-		Api2Query europeanaQuery = new Api2Query();
+        Api2Query europeanaQuery = new Api2Query();
         europeanaQuery.setTitle("vooravond");
         
         //perform search
         EuropeanaApi2Client europeanaClient = new EuropeanaApi2Client(ApacheHttpConnectors.create());
         final int RESULTS_SIZE = 5;
-		EuropeanaApi2Results res = europeanaClient.searchApi2(europeanaQuery, RESULTS_SIZE, 0);
+        EuropeanaApi2Results res = europeanaClient.searchApi2(europeanaQuery, RESULTS_SIZE, 0);
 
       //print out response time
         long t = System.currentTimeMillis() - ms0;
@@ -75,7 +75,7 @@ public class SimpleSearchIT extends BaseSearchUtils{
         
         int count = 0;
         for (EuropeanaApi2Item item : res.getAllItems()) {
-        	 System.out.println();
+             System.out.println();
              System.out.println("**** " + (count++ + 1));
              System.out.println("Title: " + item.getTitle());
              System.out.println("Europeana URL: " + item.getObjectURL());
@@ -84,6 +84,6 @@ public class SimpleSearchIT extends BaseSearchUtils{
              System.out.println("Thumbnail(s): " + item.getEdmPreview());
              System.out.println("Data provider: "
                      + item.getDataProvider());
-		}
-	}
+        }
+    }
 }

@@ -6,37 +6,37 @@ package eu.europeana.api.client.exception;
  *
  */
 public class EuropeanaApiProblem extends Exception{
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2924749433705930735L;
+    
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2924749433705930735L;
 
-	private long requestNumber;
-	
-	public EuropeanaApiProblem(String message, long requestNumber) {
-		super(message);
-		this.setRequestNumber(requestNumber);
-	}
+    private long requestNumber;
+    
+    public EuropeanaApiProblem(String message, long requestNumber) {
+        super(message);
+        this.setRequestNumber(requestNumber);
+    }
 
-	public EuropeanaApiProblem(String message) {
-		super(message);
-	}
-	
-	@Override
-	public String getMessage() {
-		if(requestNumber < 0)
-			return super.getMessage();
-		else
-			return super.getMessage() + ". RequestNumber: " + getRequestNumber();
-	}
+    public EuropeanaApiProblem(String message) {
+        super(message);
+    }
+    
+    @Override
+    public String getMessage() {
+        if(requestNumber < 0)
+            return super.getMessage();
+        else
+            return super.getMessage() + ". RequestNumber: " + getRequestNumber();
+    }
 
-	public long getRequestNumber() {
-		return requestNumber;
-	}
+    public long getRequestNumber() {
+        return requestNumber;
+    }
 
-	public void setRequestNumber(long requestNumber) {
-		this.requestNumber = requestNumber;
-	}
-	
+    public void setRequestNumber(long requestNumber) {
+        this.requestNumber = requestNumber;
+    }
+    
 }

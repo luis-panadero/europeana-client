@@ -14,25 +14,25 @@ import java.util.List;
  */
 public interface Api2QueryInterface extends EuropeanaQueryInterface {
 
-	/**
-	 * Registers a query refinement
-	 * Similar to the "add keyword" functionality in the portal
-	 *   
-	 * @param qf: string to define the query refinement
-	 */
-	public void addQueryRefinement(String qf);
+    /**
+     * Registers a query refinement
+     * Similar to the "add keyword" functionality in the portal
+     *   
+     * @param qf: string to define the query refinement
+     */
+    public void addQueryRefinement(String qf);
 
-	/**
-	 * retrieves the list of registered query refinements
-	 * 
-	 * @return list of registered query refinements
-	 */
-	public List<String> getQueryRefinements();
+    /**
+     * retrieves the list of registered query refinements
+     * 
+     * @return list of registered query refinements
+     */
+    public List<String> getQueryRefinements();
 
-	public abstract String getCollectionName();
-	
-	
+    public abstract String getCollectionName();
+    
+    
 
-	
+    
 
 }

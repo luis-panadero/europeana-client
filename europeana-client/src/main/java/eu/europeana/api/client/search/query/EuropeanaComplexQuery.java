@@ -93,79 +93,79 @@ public class EuropeanaComplexQuery implements EuropeanaQueryInterface {
         url.append(connection.getEuropeanaUri());
         url.append(ClientConfiguration.getInstance().getSearchUrn());
         url.append("?query=").append(URLEncoder.encode(seachTerms, "UTF-8"));
-	    url.append("&rows=").append(rows);
+        url.append("&rows=").append(rows);
         if (this.type!=null) {
             url.append("&qf=TYPE:").append(this.type);
         }
-	    if (cursor == null || cursor.isEmpty())
-	    	cursor = "*";
-	    url.append("&cursorMark=").append(cursor);
-	    url.append("&sort=id asc");
+        if (cursor == null || cursor.isEmpty())
+            cursor = "*";
+        url.append("&cursorMark=").append(cursor);
+        url.append("&sort=id asc");
         url.append("&wskey=").append(connection.getApiKey());
         return url.toString();
     }
     
 
-	@Override
-	public void setWhatTerms(String what) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void setWhatTerms(String what) {
+        // TODO Auto-generated method stub
+        
+    }
 
-	@Override
-	public void setGeneralTerms(String generalTerms) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void setGeneralTerms(String generalTerms) {
+        // TODO Auto-generated method stub
+        
+    }
 
-	@Override
-	public void setCreator(String creator) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void setCreator(String creator) {
+        // TODO Auto-generated method stub
+        
+    }
 
-	@Override
-	public void setProvider(String provider) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void setProvider(String provider) {
+        // TODO Auto-generated method stub
+        
+    }
 
-	@Override
-	public void setDataProvider(String dataProvider) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void setDataProvider(String dataProvider) {
+        // TODO Auto-generated method stub
+        
+    }
 
-	public String getWholeSubQuery() {
-		return null;
-	}
+    public String getWholeSubQuery() {
+        return null;
+    }
 
-	public void setWholeSubQuery(String wholeSubQuery) {
-	}
+    public void setWholeSubQuery(String wholeSubQuery) {
+    }
 
-	@Override
-	public void addSubQuery(SubQuery subQuery) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void addSubQuery(SubQuery subQuery) {
+        // TODO Auto-generated method stub
+        
+    }
 
-	@Override
-	public List<SubQuery> getSubQueries() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public List<SubQuery> getSubQueries() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public String getProfile() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String getProfile() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public void setProfile(String profile) {
-		// TODO Auto-generated method stub
-		//TODO: implement support for profile
-		
-	}
+    @Override
+    public void setProfile(String profile) {
+        // TODO Auto-generated method stub
+        //TODO: implement support for profile
+        
+    }
 
 }

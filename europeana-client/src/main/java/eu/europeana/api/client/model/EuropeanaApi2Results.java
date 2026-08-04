@@ -25,14 +25,14 @@ import eu.europeana.api.client.response.abstracts.AbstractListResponse;
  */
 public class EuropeanaApi2Results extends AbstractListResponse<EuropeanaApi2Item> {
 
-	private String nextCursor;
-	
+    private String nextCursor;
+    
     public void setNextCursor(String nextCursor) {
-		this.nextCursor = nextCursor;
-	}
+        this.nextCursor = nextCursor;
+    }
 
-	public EuropeanaApi2Results() {
-    	setItems(new ArrayList<EuropeanaApi2Item>());
+    public EuropeanaApi2Results() {
+        setItems(new ArrayList<EuropeanaApi2Item>());
     }
 
     /**
@@ -70,6 +70,6 @@ public class EuropeanaApi2Results extends AbstractListResponse<EuropeanaApi2Item
 
     
     public String getNextCursor() {
-    	return this.nextCursor;
+        return this.nextCursor;
     }
 }

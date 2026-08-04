@@ -12,67 +12,67 @@ import eu.europeana.api.client.thumbnails.processing.LargeThumbnailsetProcessing
 
 public class ThumbnailDownloader extends ThumbnailsAccessor implements Observer {
 
-	File downloadFolder;
+    File downloadFolder;
 
-	public File getDownloadFolder() {
-		return downloadFolder;
-	}
+    public File getDownloadFolder() {
+        return downloadFolder;
+    }
 
-	public ThumbnailDownloader(File downloadFolder) {
-		this.downloadFolder = downloadFolder;
-	}
+    public ThumbnailDownloader(File downloadFolder) {
+        this.downloadFolder = downloadFolder;
+    }
 
-	@Override
-	public void update(Observable o, Object arg) {
-		if (!(arg instanceof Map))
-			throw new TechnicalRuntimeException(
-					"Wrong argument type. Expected map but invoked with "
-							+ arg.getClass());
+    @Override
+    public void update(Observable o, Object arg) {
+        if (!(arg instanceof Map))
+            throw new TechnicalRuntimeException(
+                    "Wrong argument type. Expected map but invoked with "
+                            + arg.getClass());
 
-		@SuppressWarnings("unchecked")
-		Map<String, String> thumbnailMap = (Map<String, String>) arg;
+        @SuppressWarnings("unchecked")
+        Map<String, String> thumbnailMap = (Map<String, String>) arg;
 
-		int failureCount = 0;
-		boolean successful;
+        int failureCount = 0;
+        boolean successful;
 
-		for (Map.Entry<String, String> thumbnail : thumbnailMap.entrySet()) {
-			successful = writeThumbnailToFolder(thumbnail.getKey(),
-					thumbnail.getValue(), getDownloadFolder());
+        for (Map.Entry<String, String> thumbnail : thumbnailMap.entrySet()) {
+            successful = writeThumbnailToFolder(thumbnail.getKey(),
+                    thumbnail.getValue(), getDownloadFolder());
 
-			if (!successful) {
+            if (!successful) {
 
-				log.warn("Cannot download: " + thumbnail.getKey() + ";"
-						+ thumbnail.getValue());
-				failureCount++;
-			}
-		}
+                log.warn("Cannot download: " + thumbnail.getKey() + ";"
+                        + thumbnail.getValue());
+                failureCount++;
+            }
+        }
 
-		((LargeThumbnailsetProcessing) o).increaseFailureCount(failureCount);
-		((LargeThumbnailsetProcessing) o)
-				.increaseSkippedItemsCount(getSkippedItems());
-		this.resetSkippedItems();
-	}
+        ((LargeThumbnailsetProcessing) o).increaseFailureCount(failureCount);
+        ((LargeThumbnailsetProcessing) o)
+                .increaseSkippedItemsCount(getSkippedItems());
+        this.resetSkippedItems();
+    }
 
-	public void downloadImages(Map<String, String> thumbnailMap)
-			throws IOException {
+    public void downloadImages(Map<String, String> thumbnailMap)
+            throws IOException {
 
-		int failureCount = 0;
-		boolean successful;
-		// final File downloadFolder = new
-		// File(getDownloadFolder().getParentFile(), "cimec/");
+        int failureCount = 0;
+        boolean successful;
+        // final File downloadFolder = new
+        // File(getDownloadFolder().getParentFile(), "cimec/");
 
-		for (Map.Entry<String, String> thumbnail : thumbnailMap.entrySet()) {
-			successful = writeThumbnailToFolder(thumbnail.getKey(),
-					thumbnail.getValue(), getDownloadFolder());
+        for (Map.Entry<String, String> thumbnail : thumbnailMap.entrySet()) {
+            successful = writeThumbnailToFolder(thumbnail.getKey(),
+                    thumbnail.getValue(), getDownloadFolder());
 
-			if (!successful) {
-				System.out.println("Cannot download: " + thumbnail.getKey()
-						+ ";" + thumbnail.getValue());
-				failureCount++;
-			}
-		}
-		System.out.println("Total items: " + thumbnailMap.size());
-		System.out.println("Failed for items: " + failureCount);
-	}
+            if (!successful) {
+                System.out.println("Cannot download: " + thumbnail.getKey()
+                        + ";" + thumbnail.getValue());
+                failureCount++;
+            }
+        }
+        System.out.println("Total items: " + thumbnailMap.size());
+        System.out.println("Failed for items: " + failureCount);
+    }
 
 }

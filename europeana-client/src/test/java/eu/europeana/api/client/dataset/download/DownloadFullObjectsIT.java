@@ -17,99 +17,99 @@ import eu.europeana.api.client.connection.ApacheHttpConnectors;
 import eu.europeana.api.client.dataset.EuClientDatasetUtil;
 
 public class DownloadFullObjectsIT extends
-		EuClientDatasetUtil {
+        EuClientDatasetUtil {
 
-	String EUROPEANA_ID_LIST_CSV = "overview.csv"; 
-	
-	
-	boolean overwrite = false;
-	
-	//support running the test as stand alone class
-	public static void main(String[] args) throws Exception {                    
-		parseParams(args);      
-		JUnitCore.main(DownloadFullObjectsIT.class.getCanonicalName());            
-	}
-	
-	
-	@Test
-	public void downloadMetadataForDataset() throws IOException{
+    String EUROPEANA_ID_LIST_CSV = "overview.csv"; 
+    
+    
+    boolean overwrite = false;
+    
+    //support running the test as stand alone class
+    public static void main(String[] args) throws Exception {                    
+        parseParams(args);      
+        JUnitCore.main(DownloadFullObjectsIT.class.getCanonicalName());            
+    }
+    
+    
+    @Test
+    public void downloadMetadataForDataset() throws IOException{
 
-		ensureParamsInit();
-		
-		File datasetFile = resolveClasspathDatasetFile(EUROPEANA_ID_LIST_CSV);
-		if(!datasetFile.exists())
-			fail("required dataset file doesn't exist" + datasetFile);
-		
-		EuropeanaApi2Client client = new EuropeanaApi2Client(ApacheHttpConnectors.create());
-		
-		LineIterator iterator = FileUtils.lineIterator(datasetFile);
-		String line;
-		String europeanaId;
-		String response; 
-		File recordFile;
-		int cnt = 0;
-		int failedCounter = 0; 
-		int skipCounter = 0;
-		final String cellSeparator = ";"; // "\t";
-		
-		while (iterator.hasNext()) {
-			
-			line = (String) iterator.next();
-			europeanaId = line.split(cellSeparator, 2)[0];
-			
-			//ignore comments
-			if(europeanaId.isEmpty() || !europeanaId.startsWith("/"))
-				continue;
-			
-			try{
-				recordFile = new File(datasetFile.getParentFile(), "full"+ europeanaId + ".json");
-//				recordFile = new File(datasetFile.getParentFile(), "metadata/response/record"+ europeanaId + ".json");
-				
-				if(!recordFile.exists() || overwrite){
-					//read file
-					response = client.getEuropeanaRecordResponse(europeanaId);
-					FileUtils.writeStringToFile(recordFile, response, "UTF-8");
-					cnt++;
-					
-					if(cnt%100==0)
-						log.debug("Downloaded metadata files: " + cnt);					
-				}else{
-					skipCounter++;
-				}
-				
-			}catch(Exception e){
-				//log failures
-				failedCounter++;
-				log.debug("Download Error: cannot retrieve object with id: " + europeanaId);
-				log.trace("Stacktrace", e);
-			}
-		}
-		
-		log.info("Successfully downloaded files: " + cnt);
-		log.info("Failed downloads: " + failedCounter);
-		log.info("Skipped downloads: " + skipCounter);
-		
-	}
+        ensureParamsInit();
+        
+        File datasetFile = resolveClasspathDatasetFile(EUROPEANA_ID_LIST_CSV);
+        if(!datasetFile.exists())
+            fail("required dataset file doesn't exist" + datasetFile);
+        
+        EuropeanaApi2Client client = new EuropeanaApi2Client(ApacheHttpConnectors.create());
+        
+        LineIterator iterator = FileUtils.lineIterator(datasetFile);
+        String line;
+        String europeanaId;
+        String response; 
+        File recordFile;
+        int cnt = 0;
+        int failedCounter = 0; 
+        int skipCounter = 0;
+        final String cellSeparator = ";"; // "\t";
+        
+        while (iterator.hasNext()) {
+            
+            line = (String) iterator.next();
+            europeanaId = line.split(cellSeparator, 2)[0];
+            
+            //ignore comments
+            if(europeanaId.isEmpty() || !europeanaId.startsWith("/"))
+                continue;
+            
+            try{
+                recordFile = new File(datasetFile.getParentFile(), "full"+ europeanaId + ".json");
+//              recordFile = new File(datasetFile.getParentFile(), "metadata/response/record"+ europeanaId + ".json");
+                
+                if(!recordFile.exists() || overwrite){
+                    //read file
+                    response = client.getEuropeanaRecordResponse(europeanaId);
+                    FileUtils.writeStringToFile(recordFile, response, "UTF-8");
+                    cnt++;
+                    
+                    if(cnt%100==0)
+                        log.debug("Downloaded metadata files: " + cnt);                 
+                }else{
+                    skipCounter++;
+                }
+                
+            }catch(Exception e){
+                //log failures
+                failedCounter++;
+                log.debug("Download Error: cannot retrieve object with id: " + europeanaId);
+                log.trace("Stacktrace", e);
+            }
+        }
+        
+        log.info("Successfully downloaded files: " + cnt);
+        log.info("Failed downloads: " + failedCounter);
+        log.info("Skipped downloads: " + skipCounter);
+        
+    }
 
 
-	protected void ensureParamsInit() {
-		//if not sent through parameters set it to test.
-		if(getDataset() == null)
-			setDataset("allsound");
-	}
+    protected void ensureParamsInit() {
+        //if not sent through parameters set it to test.
+        if(getDataset() == null)
+            setDataset("allsound");
+    }
 
-	protected File resolveClasspathDatasetFile(String fileName) {
-		String resourcePath = "/europeanaclient/datasets/metadata/" + fileName;
-		URL resource = getClass().getResource(resourcePath);
-		if (resource == null) {
-			throw new IllegalStateException("Classpath resource not found: " + resourcePath);
-		}
-		try {
-			return new File(resource.toURI());
-		} catch (URISyntaxException e) {
-			throw new IllegalStateException("Invalid classpath resource URI: " + resourcePath, e);
-		}
-	}
+    protected File resolveClasspathDatasetFile(String fileName) {
+        String resourcePath = "/europeanaclient/datasets/metadata/" + fileName;
+        URL resource = getClass().getResource(resourcePath);
+        if (resource == null) {
+            throw new IllegalStateException("Classpath resource not found: " + resourcePath);
+        }
+        try {
+            return new File(resource.toURI());
+        } catch (URISyntaxException e) {
+            throw new IllegalStateException("Invalid classpath resource URI: " + resourcePath, e);
+        }
+    }
 
-	
+    
 }

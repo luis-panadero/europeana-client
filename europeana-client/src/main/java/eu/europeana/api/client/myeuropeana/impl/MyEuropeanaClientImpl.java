@@ -18,87 +18,87 @@ import eu.europeana.api.client.myeuropeana.exception.MyEuropeanaApiException;
 import eu.europeana.api.client.myeuropeana.response.TagsApiResponse;
 
 public class MyEuropeanaClientImpl extends BaseApiConnection implements
-		MyEuropeanaClient {
+        MyEuropeanaClient {
 
-	public EuropeanaApiConfiguration getConfiguration() {
-		return ClientConfiguration.getInstance();
-	}
+    public EuropeanaApiConfiguration getConfiguration() {
+        return ClientConfiguration.getInstance();
+    }
 
-	public MyEuropeanaClientImpl(String myEuropeanaServiceUri, String apiKey) {
-		super(myEuropeanaServiceUri, apiKey);
-		// initialize configuration
-		getConfiguration();
-	}
+    public MyEuropeanaClientImpl(String myEuropeanaServiceUri, String apiKey) {
+        super(myEuropeanaServiceUri, apiKey);
+        // initialize configuration
+        getConfiguration();
+    }
 
-	public MyEuropeanaClientImpl(String myEuropeanaServiceUri, String apiKey,
-			HttpConnector httpConnection) {
-		super(myEuropeanaServiceUri, apiKey, httpConnection);
-		getConfiguration();
-	}
+    public MyEuropeanaClientImpl(String myEuropeanaServiceUri, String apiKey,
+            HttpConnector httpConnection) {
+        super(myEuropeanaServiceUri, apiKey, httpConnection);
+        getConfiguration();
+    }
 
-	public MyEuropeanaClientImpl() {
-		this(null, null);
-		// initialize attributes
-		setApiKey(getConfiguration().getApiKey());
-		setServiceUri(getConfiguration().getEuropeanaUri());
-	}
+    public MyEuropeanaClientImpl() {
+        this(null, null);
+        // initialize attributes
+        setApiKey(getConfiguration().getApiKey());
+        setServiceUri(getConfiguration().getEuropeanaUri());
+    }
 
-	public MyEuropeanaClientImpl(HttpConnector httpConnection) {
-		this();
-		setHttpConnection(httpConnection);
-	}
+    public MyEuropeanaClientImpl(HttpConnector httpConnection) {
+        this();
+        setHttpConnection(httpConnection);
+    }
 
-	@Override
-	public TagsApiResponse parseTagsApiResponse(String json)
-			throws MyEuropeanaApiException {
+    @Override
+    public TagsApiResponse parseTagsApiResponse(String json)
+            throws MyEuropeanaApiException {
 
-		// Load results object from JSON
-		Gson gson = new GsonBuilder().create();
-		TagsApiResponse res = gson.fromJson(json, TagsApiResponse.class);
+        // Load results object from JSON
+        Gson gson = new GsonBuilder().create();
+        TagsApiResponse res = gson.fromJson(json, TagsApiResponse.class);
 
-		if (!res.getSuccess())
-			throw new MyEuropeanaApiException(res.getError(),
-					res.getRequestNumber());
+        if (!res.getSuccess())
+            throw new MyEuropeanaApiException(res.getError(),
+                    res.getRequestNumber());
 
-		logger.trace("Number of retrieved results: " + res.getItemsCount());
-		logger.debug("Total results: " + res.getTotalResults());
+        logger.trace("Number of retrieved results: " + res.getItemsCount());
+        logger.debug("Total results: " + res.getTotalResults());
 
-		return res;
-	}
+        return res;
+    }
 
-	/**
-	 * Creates URL based on the URI passed in.
-	 */
-	protected String buildInvokationUrl(String action, String apiKey) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getServiceUri());
-		sb.append(action);
-		sb.append("?wsKey=").append(apiKey);
+    /**
+     * Creates URL based on the URI passed in.
+     */
+    protected String buildInvokationUrl(String action, String apiKey) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getServiceUri());
+        sb.append(action);
+        sb.append("?wsKey=").append(apiKey);
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * @see eu.europeana.api.client.myeuropeana.MyEuropeanaClient#parseTagsApiResponse(java.io.InputStream)
-	 */
-	@Override
-	public TagsApiResponse parseTagsApiResponse(InputStream jsonStream)
-			throws MyEuropeanaApiException {
+    /*
+     * (non-Javadoc)
+     * @see eu.europeana.api.client.myeuropeana.MyEuropeanaClient#parseTagsApiResponse(java.io.InputStream)
+     */
+    @Override
+    public TagsApiResponse parseTagsApiResponse(InputStream jsonStream)
+            throws MyEuropeanaApiException {
 
-		BufferedReader reader = new BufferedReader(new InputStreamReader(
-				jsonStream));
-		StringBuilder out = new StringBuilder();
-		String line;
-		try {
-			while ((line = reader.readLine()) != null){
-				out.append(line);
-			}	
-		} catch (IOException e) {
-			throw new TechnicalRuntimeException("Cannot read input stream!", e); 
-		}
+        BufferedReader reader = new BufferedReader(new InputStreamReader(
+                jsonStream));
+        StringBuilder out = new StringBuilder();
+        String line;
+        try {
+            while ((line = reader.readLine()) != null){
+                out.append(line);
+            }   
+        } catch (IOException e) {
+            throw new TechnicalRuntimeException("Cannot read input stream!", e); 
+        }
 
-		return parseTagsApiResponse(out.toString());
-	}
+        return parseTagsApiResponse(out.toString());
+    }
 
 }

@@ -12,106 +12,106 @@ import eu.europeana.api.client.config.ClientConfiguration;
  */
 public class BaseApiConnection {
 
-	private String apiKey;
-	private String baseServiceUri = "";
-	private HttpConnector httpConnection;
-	protected Logger logger = LoggerFactory.getLogger(getClass().getName());
+    private String apiKey;
+    private String baseServiceUri = "";
+    private HttpConnector httpConnection;
+    protected Logger logger = LoggerFactory.getLogger(getClass().getName());
 
-	public String getApiKey() {
-		return apiKey;
-	}
+    public String getApiKey() {
+        return apiKey;
+    }
 
-	public void setApiKey(String apiKey) {
-		this.apiKey = apiKey;
-	}
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
+    }
 
-	public String getServiceUri() {
-		return baseServiceUri;
-	}
+    public String getServiceUri() {
+        return baseServiceUri;
+    }
 
-	public void setServiceUri(String serviceUri) {
-		this.baseServiceUri = serviceUri;
-	}
+    public void setServiceUri(String serviceUri) {
+        this.baseServiceUri = serviceUri;
+    }
 
-	/**
-	 * Alias of {@link #getServiceUri()} kept for query URL builders.
-	 */
-	public String getEuropeanaUri() {
-		return getServiceUri();
-	}
+    /**
+     * Alias of {@link #getServiceUri()} kept for query URL builders.
+     */
+    public String getEuropeanaUri() {
+        return getServiceUri();
+    }
 
-	/**
-	 * Alias of {@link #setServiceUri(String)} kept for query URL builders.
-	 */
-	public void setEuropeanaUri(String europeanaUri) {
-		setServiceUri(europeanaUri);
-	}
+    /**
+     * Alias of {@link #setServiceUri(String)} kept for query URL builders.
+     */
+    public void setEuropeanaUri(String europeanaUri) {
+        setServiceUri(europeanaUri);
+    }
 
-	public HttpConnector getHttpConnection() {
-		return httpConnection;
-	}
+    public HttpConnector getHttpConnection() {
+        return httpConnection;
+    }
 
-	public void setHttpConnection(HttpConnector httpConnection) {
-		this.httpConnection = httpConnection;
-	}
+    public void setHttpConnection(HttpConnector httpConnection) {
+        this.httpConnection = httpConnection;
+    }
 
-	/**
-	 * Create a new connection to the Annotation Service (REST API).
-	 * 
-	 * @param baseServiceUri
-	 * 
-	 * @param apiKey
-	 *            API Key required to access the API
-	 * 
-	 */
-	public BaseApiConnection(String baseServiceUri, String apiKey) {
-		this.apiKey = apiKey;
-		this.baseServiceUri = baseServiceUri;
-	}
+    /**
+     * Create a new connection to the Annotation Service (REST API).
+     * 
+     * @param baseServiceUri
+     * 
+     * @param apiKey
+     *            API Key required to access the API
+     * 
+     */
+    public BaseApiConnection(String baseServiceUri, String apiKey) {
+        this.apiKey = apiKey;
+        this.baseServiceUri = baseServiceUri;
+    }
 
-	/**
-	 * Create a new connection with an explicit HTTP transport.
-	 */
-	public BaseApiConnection(String baseServiceUri, String apiKey, HttpConnector httpConnection) {
-		this(baseServiceUri, apiKey);
-		this.httpConnection = httpConnection;
-	}
+    /**
+     * Create a new connection with an explicit HTTP transport.
+     */
+    public BaseApiConnection(String baseServiceUri, String apiKey, HttpConnector httpConnection) {
+        this(baseServiceUri, apiKey);
+        this.httpConnection = httpConnection;
+    }
 
-	/**
-	 * Create a new connection to the Annotation Service (REST API) using the default configuration in the properties files
-	 */
-	public BaseApiConnection() {
-		this(
-				ClientConfiguration.getInstance().getEuropeanaUri(),
-				ClientConfiguration.getInstance().getApiKey());
-	}
+    /**
+     * Create a new connection to the Annotation Service (REST API) using the default configuration in the properties files
+     */
+    public BaseApiConnection() {
+        this(
+                ClientConfiguration.getInstance().getEuropeanaUri(),
+                ClientConfiguration.getInstance().getApiKey());
+    }
 
-	/**
-	 * Create a new connection using the default configuration and an explicit HTTP transport.
-	 */
-	public BaseApiConnection(HttpConnector httpConnection) {
-		this();
-		this.httpConnection = httpConnection;
-	}
+    /**
+     * Create a new connection using the default configuration and an explicit HTTP transport.
+     */
+    public BaseApiConnection(HttpConnector httpConnection) {
+        this();
+        this.httpConnection = httpConnection;
+    }
 
-	protected String getJSONResult(String url) throws IOException {
-		logger.trace("Call to Annotation API (GET): " + url);
-		return requireHttpConnection().getURLContent(url);
-	}
+    protected String getJSONResult(String url) throws IOException {
+        logger.trace("Call to Annotation API (GET): " + url);
+        return requireHttpConnection().getURLContent(url);
+    }
 
-	protected String getJSONResult(String url, String paramName, String jsonPost)
-			throws IOException {
-		logger.trace("Call to Annotation API (POST): " + url);
-		
-		return requireHttpConnection().getURLContent(url, paramName, jsonPost);
-	}
+    protected String getJSONResult(String url, String paramName, String jsonPost)
+            throws IOException {
+        logger.trace("Call to Annotation API (POST): " + url);
+        
+        return requireHttpConnection().getURLContent(url, paramName, jsonPost);
+    }
 
-	private HttpConnector requireHttpConnection() {
-		if (httpConnection == null) {
-			throw new IllegalStateException(
-					"HttpConnector is not configured. Inject one via setHttpConnection(...) "
-							+ "or a constructor that accepts HttpConnector.");
-		}
-		return httpConnection;
-	}
+    private HttpConnector requireHttpConnection() {
+        if (httpConnection == null) {
+            throw new IllegalStateException(
+                    "HttpConnector is not configured. Inject one via setHttpConnection(...) "
+                            + "or a constructor that accepts HttpConnector.");
+        }
+        return httpConnection;
+    }
 }

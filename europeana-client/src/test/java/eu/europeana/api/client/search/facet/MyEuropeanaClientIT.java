@@ -19,34 +19,34 @@ import eu.europeana.api.client.myeuropeana.response.TagsApiResponse;
 /** my europeana is not available for the time being */
 public class MyEuropeanaClientIT {
 
-	@Test
-	public void testParseApiResponse() throws MyEuropeanaApiException, IOException{
-		MyEuropeanaClient client = new MyEuropeanaClientImpl();
-		String jsonFile = "/myeuropeana/mydata_tag.json";
-		String json = readJsonFile(jsonFile);
-		TagsApiResponse apiResponse = client.parseTagsApiResponse(json);
-		assertEquals(600, apiResponse.getItemsCount());
-		assertEquals(600, apiResponse.getTotalResults());
-	}
+    @Test
+    public void testParseApiResponse() throws MyEuropeanaApiException, IOException{
+        MyEuropeanaClient client = new MyEuropeanaClientImpl();
+        String jsonFile = "/myeuropeana/mydata_tag.json";
+        String json = readJsonFile(jsonFile);
+        TagsApiResponse apiResponse = client.parseTagsApiResponse(json);
+        assertEquals(600, apiResponse.getItemsCount());
+        assertEquals(600, apiResponse.getTotalResults());
+    }
 
-	private String readJsonFile(String testResource) throws IOException {
-		BufferedReader reader = null;
-		StringBuilder out = null;
-		try {
-			InputStream resourceAsStream = getClass().getResourceAsStream(
-					testResource);
-			reader = new BufferedReader(new InputStreamReader(
-					resourceAsStream));
-			out = new StringBuilder();
-			String line;
-			while ((line = reader.readLine()) != null) {
-				out.append(line);
-			}
-		} finally {
-			if(reader!= null)
-				reader.close();
-		}
-		return out.toString();
+    private String readJsonFile(String testResource) throws IOException {
+        BufferedReader reader = null;
+        StringBuilder out = null;
+        try {
+            InputStream resourceAsStream = getClass().getResourceAsStream(
+                    testResource);
+            reader = new BufferedReader(new InputStreamReader(
+                    resourceAsStream));
+            out = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                out.append(line);
+            }
+        } finally {
+            if(reader!= null)
+                reader.close();
+        }
+        return out.toString();
 
-	}
+    }
 }

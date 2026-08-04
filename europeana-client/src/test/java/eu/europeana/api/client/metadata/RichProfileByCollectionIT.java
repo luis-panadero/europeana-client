@@ -24,32 +24,32 @@ import eu.europeana.api.client.search.query.Api2QueryInterface;
 @Ignore
 public class RichProfileByCollectionIT extends EuClientDatasetUtil {
 
-	@Test
-	public void saveMedataForCollections() throws IOException, EuropeanaApiProblem {
+    @Test
+    public void saveMedataForCollections() throws IOException, EuropeanaApiProblem {
 
-		File collectionsFile = new File("/tmp/europeana/collections/europeana_collections.csv");
-		List<String> collections = FileUtils.readLines(collectionsFile);
-		String collectionId = null;
-		for (String collection : collections) {
-			if (!collection.startsWith("#")) {
-				collectionId = collection.split(";", 2)[0];
-				saveRichResponseForCollection(collectionId);
-			}
-		}
-	}
-	public void saveRichResponseForCollection(String collectionId) 
-			throws IOException, EuropeanaApiProblem {
-		
-		Api2QueryInterface apiQuery = new Api2Query(collectionId + "_*");
-		apiQuery.setProfile("rich");
-		MetadataAccessor ma = new MetadataAccessor(apiQuery, null);
-		ma.setHttpConnection(ApacheHttpConnectors.create());
-		//metadata folder is set through configuration
-		//ma.setMetadataFolder("/tmp/europeana/collections/metadata/");
-		ma.setStoreBlockwiseAsJson(true);
-		// Map<String, String> contentMap =
-		ma.getContentMap(CommonMetadata.EDM_FIELD_IGNORE, CommonMetadata.START_BEGINING, CommonMetadata.LIMIT_ALL,
-				MetadataAccessor.ERROR_POLICY_CONTINUE);
+        File collectionsFile = new File("/tmp/europeana/collections/europeana_collections.csv");
+        List<String> collections = FileUtils.readLines(collectionsFile);
+        String collectionId = null;
+        for (String collection : collections) {
+            if (!collection.startsWith("#")) {
+                collectionId = collection.split(";", 2)[0];
+                saveRichResponseForCollection(collectionId);
+            }
+        }
+    }
+    public void saveRichResponseForCollection(String collectionId) 
+            throws IOException, EuropeanaApiProblem {
+        
+        Api2QueryInterface apiQuery = new Api2Query(collectionId + "_*");
+        apiQuery.setProfile("rich");
+        MetadataAccessor ma = new MetadataAccessor(apiQuery, null);
+        ma.setHttpConnection(ApacheHttpConnectors.create());
+        //metadata folder is set through configuration
+        //ma.setMetadataFolder("/tmp/europeana/collections/metadata/");
+        ma.setStoreBlockwiseAsJson(true);
+        // Map<String, String> contentMap =
+        ma.getContentMap(CommonMetadata.EDM_FIELD_IGNORE, CommonMetadata.START_BEGINING, CommonMetadata.LIMIT_ALL,
+                MetadataAccessor.ERROR_POLICY_CONTINUE);
 
-	}
+    }
 }

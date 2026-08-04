@@ -22,144 +22,144 @@ import eu.europeana.api.client.model.provider.Provider;
  *
  */
 public class ProviderDatasetsClientImpl extends BaseApiConnection implements
-		ProviderDatasetsClient {
+        ProviderDatasetsClient {
 
-	/**
-	 * Default constructor which calls the default constructor of the parent
-	 * BaseApiConnection class
-	 */
-	public ProviderDatasetsClientImpl() {
-		super();
-	}
+    /**
+     * Default constructor which calls the default constructor of the parent
+     * BaseApiConnection class
+     */
+    public ProviderDatasetsClientImpl() {
+        super();
+    }
 
-	/**
-	 * Default configuration with an explicit HTTP transport.
-	 */
-	public ProviderDatasetsClientImpl(HttpConnector httpConnection) {
-		super(httpConnection);
-	}
+    /**
+     * Default configuration with an explicit HTTP transport.
+     */
+    public ProviderDatasetsClientImpl(HttpConnector httpConnection) {
+        super(httpConnection);
+    }
 
-	/**
-	 * Constructor which provides new strings for the search URI and and the API
-	 * key.
-	 * 
-	 * @param baseApiUri
-	 *            : Base URI for the Europeana api request (see config file).
-	 * @param apiKey
-	 *            : API key for the Europeana api request (see config file).
-	 */
-	public ProviderDatasetsClientImpl(String baseApiUri, String apiKey) {
-		super(baseApiUri, apiKey);
-	}
+    /**
+     * Constructor which provides new strings for the search URI and and the API
+     * key.
+     * 
+     * @param baseApiUri
+     *            : Base URI for the Europeana api request (see config file).
+     * @param apiKey
+     *            : API key for the Europeana api request (see config file).
+     */
+    public ProviderDatasetsClientImpl(String baseApiUri, String apiKey) {
+        super(baseApiUri, apiKey);
+    }
 
-	/**
-	 * Constructor with base URI, API key and an explicit HTTP transport.
-	 */
-	public ProviderDatasetsClientImpl(String baseApiUri, String apiKey,
-			HttpConnector httpConnection) {
-		super(baseApiUri, apiKey, httpConnection);
-	}
+    /**
+     * Constructor with base URI, API key and an explicit HTTP transport.
+     */
+    public ProviderDatasetsClientImpl(String baseApiUri, String apiKey,
+            HttpConnector httpConnection) {
+        super(baseApiUri, apiKey, httpConnection);
+    }
 
-	@Override
-	/*
-	 * (non-Javadoc)
-	 * @see eu.europeana.api.client.ProviderDatasetsClient#getProvidersList(int, int, String)
-	 */
-	public List<Provider> getProvidersList(int offset, int pageSize, String countryCode) throws EuropeanaApiProblem {
-		ProvidersResponse response = getProvidersResponse(offset, pageSize, countryCode);
-		return response.getItems();
-	}
-	
-	@Override
-	/*
-	 * (non-Javadoc)
-	 * @see eu.europeana.api.client.ProviderDatasetsClient#getProvidersList()
-	 */
-	public List<Provider> getProvidersList() throws EuropeanaApiProblem {
-		return getProvidersList(-1, -1, null);
-	}
+    @Override
+    /*
+     * (non-Javadoc)
+     * @see eu.europeana.api.client.ProviderDatasetsClient#getProvidersList(int, int, String)
+     */
+    public List<Provider> getProvidersList(int offset, int pageSize, String countryCode) throws EuropeanaApiProblem {
+        ProvidersResponse response = getProvidersResponse(offset, pageSize, countryCode);
+        return response.getItems();
+    }
+    
+    @Override
+    /*
+     * (non-Javadoc)
+     * @see eu.europeana.api.client.ProviderDatasetsClient#getProvidersList()
+     */
+    public List<Provider> getProvidersList() throws EuropeanaApiProblem {
+        return getProvidersList(-1, -1, null);
+    }
 
-	@Override
-	/*
-	 * (non-Javadoc)
-	 * @see eu.europeana.api.client.ProviderDatasetsClient#getProvidersResponse(int, int, String)
-	 */
-	public ProvidersResponse getProvidersResponse(int offset, int pageSize, String countryCode) throws EuropeanaApiProblem {
-		String url = buildProvidersUrl(offset, pageSize, countryCode);
-			
-	        // Load results object from JSON
-	        Gson gson = new GsonBuilder().create();
-	        ProvidersResponse res = null;
-	        String jsonResult = null;
-			try {
-				jsonResult = getJSONResult(url);
-				res = gson.fromJson(jsonResult, ProvidersResponse.class);
-		    } catch (JsonSyntaxException e) {
-				throw new TechnicalRuntimeException("Cannot parse Json Response" + jsonResult, e);
-			} catch (IOException e) {
-				throw new TechnicalRuntimeException("Cannot invoke providers API:" + url, e);
-			}
-			if(!res.getSuccess())
-				throw new EuropeanaApiProblem("Cannot retrieve list of providers!", res.getRequestNumber());
-				
-	        //else
-	        return res;
-	}
+    @Override
+    /*
+     * (non-Javadoc)
+     * @see eu.europeana.api.client.ProviderDatasetsClient#getProvidersResponse(int, int, String)
+     */
+    public ProvidersResponse getProvidersResponse(int offset, int pageSize, String countryCode) throws EuropeanaApiProblem {
+        String url = buildProvidersUrl(offset, pageSize, countryCode);
+            
+            // Load results object from JSON
+            Gson gson = new GsonBuilder().create();
+            ProvidersResponse res = null;
+            String jsonResult = null;
+            try {
+                jsonResult = getJSONResult(url);
+                res = gson.fromJson(jsonResult, ProvidersResponse.class);
+            } catch (JsonSyntaxException e) {
+                throw new TechnicalRuntimeException("Cannot parse Json Response" + jsonResult, e);
+            } catch (IOException e) {
+                throw new TechnicalRuntimeException("Cannot invoke providers API:" + url, e);
+            }
+            if(!res.getSuccess())
+                throw new EuropeanaApiProblem("Cannot retrieve list of providers!", res.getRequestNumber());
+                
+            //else
+            return res;
+    }
 
-	private String buildProvidersUrl(int offset, int pageSize,
-			String countryCode) {
-	
-		StringBuilder builder = new StringBuilder(getServiceUri());
-		builder.append("/providers.json");
-		builder.append("?wskey=").append(getApiKey());
-		
-		if(offset > 0)
-			builder.append("&offset=").append(offset);
-		
-		if(pageSize > 0)
-			builder.append("&pagesize=").append(pageSize);
-		
-		if(countryCode != null)
-			builder.append("&countryCode=").append(countryCode);
-		
-		return builder.toString();
-	}
+    private String buildProvidersUrl(int offset, int pageSize,
+            String countryCode) {
+    
+        StringBuilder builder = new StringBuilder(getServiceUri());
+        builder.append("/providers.json");
+        builder.append("?wskey=").append(getApiKey());
+        
+        if(offset > 0)
+            builder.append("&offset=").append(offset);
+        
+        if(pageSize > 0)
+            builder.append("&pagesize=").append(pageSize);
+        
+        if(countryCode != null)
+            builder.append("&countryCode=").append(countryCode);
+        
+        return builder.toString();
+    }
 
-	@Override
-	public Provider getProvider(String providerId) throws EuropeanaApiProblem{
-		ProviderAccessResponse response = getProviderResponse(providerId);
-		return response.getObject();
-	}
-	
-	protected ProviderAccessResponse getProviderResponse(String providerId) throws EuropeanaApiProblem{
-		String url = buildProviderByIdUrl(providerId);
-		
-		 // Load results object from JSON
+    @Override
+    public Provider getProvider(String providerId) throws EuropeanaApiProblem{
+        ProviderAccessResponse response = getProviderResponse(providerId);
+        return response.getObject();
+    }
+    
+    protected ProviderAccessResponse getProviderResponse(String providerId) throws EuropeanaApiProblem{
+        String url = buildProviderByIdUrl(providerId);
+        
+         // Load results object from JSON
         Gson gson = new GsonBuilder().create();
         ProviderAccessResponse res = null;
         String jsonResult = null;
-		try {
-			jsonResult = getJSONResult(url);
-			res = gson.fromJson(jsonResult, ProviderAccessResponse.class);
-	    } catch (JsonSyntaxException e) {
-			throw new TechnicalRuntimeException("Cannot parse Json Response" + jsonResult, e);
-		} catch (IOException e) {
-			throw new TechnicalRuntimeException("Cannot invoke providers API:" + url, e);
-		}
-		if(!res.getSuccess())
-			throw new EuropeanaApiProblem("Cannot retrieve provider by id: " + providerId, res.getRequestNumber());
-			
+        try {
+            jsonResult = getJSONResult(url);
+            res = gson.fromJson(jsonResult, ProviderAccessResponse.class);
+        } catch (JsonSyntaxException e) {
+            throw new TechnicalRuntimeException("Cannot parse Json Response" + jsonResult, e);
+        } catch (IOException e) {
+            throw new TechnicalRuntimeException("Cannot invoke providers API:" + url, e);
+        }
+        if(!res.getSuccess())
+            throw new EuropeanaApiProblem("Cannot retrieve provider by id: " + providerId, res.getRequestNumber());
+            
         //else
         return res;
-	}
-	
-	private String buildProviderByIdUrl(String providerId) {
-	
-		StringBuilder builder = new StringBuilder(getServiceUri());
-		builder.append("/provider/").append(providerId).append(".json");
-		builder.append("?wskey=").append(getApiKey());
-		
-		return builder.toString();
-	}
-	
+    }
+    
+    private String buildProviderByIdUrl(String providerId) {
+    
+        StringBuilder builder = new StringBuilder(getServiceUri());
+        builder.append("/provider/").append(providerId).append(".json");
+        builder.append("?wskey=").append(getApiKey());
+        
+        return builder.toString();
+    }
+    
 }

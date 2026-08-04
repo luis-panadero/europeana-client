@@ -59,6 +59,5 @@ cp src/main/resources/europeana-client.properties.template \
 
 ## Convenciones
 
-- `.editorconfig`: CRLF por defecto; LF en `*.{sh,yml,json}`; indent 4 en Java/Groovy.
-- En la práctica: fuentes **Java** suelen usar **tabs**; Specs **Groovy** usan **spaces**. Igualar el fichero tocado.
+- `.editorconfig`: CRLF por defecto; LF en `*.{sh,yml,json}`; indent 4 espacios en Java/Groovy.
 - `*.properties` charset latin1 según EditorConfig.

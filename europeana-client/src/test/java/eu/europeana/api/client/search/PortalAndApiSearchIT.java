@@ -13,17 +13,17 @@ import eu.europeana.api.client.model.EuropeanaApi2Results;
 
 public class PortalAndApiSearchIT extends BaseSearchUtils{
 
-	@Test
-	public void testSearchByPortalUrl() throws IOException, EuropeanaApiProblem{
-		
-		EuropeanaApi2Client client = new EuropeanaApi2Client(ApacheHttpConnectors.create());
-		final String portalSearchUrl = "https://www.europeana.eu/en/search?query=DATA_PROVIDER%3A%22Wellcome+Library%22+Great+War+OR+First+World+War+OR+WW1+OR+1914-1918&start=13&rows=12";
-		EuropeanaApi2Results results = client.searchApi2(portalSearchUrl, 4, 1);
-		assertNotNull(results.getAllItems());
-		assertEquals(4, results.getAllItems().size());
-		assertEquals(4, results.getItemsCount());
-		
-		printSearchResults(results);
-	}
-	
+    @Test
+    public void testSearchByPortalUrl() throws IOException, EuropeanaApiProblem{
+        
+        EuropeanaApi2Client client = new EuropeanaApi2Client(ApacheHttpConnectors.create());
+        final String portalSearchUrl = "https://www.europeana.eu/en/search?query=DATA_PROVIDER%3A%22Wellcome+Library%22+Great+War+OR+First+World+War+OR+WW1+OR+1914-1918&start=13&rows=12";
+        EuropeanaApi2Results results = client.searchApi2(portalSearchUrl, 4, 1);
+        assertNotNull(results.getAllItems());
+        assertEquals(4, results.getAllItems().size());
+        assertEquals(4, results.getItemsCount());
+        
+        printSearchResults(results);
+    }
+    
 }

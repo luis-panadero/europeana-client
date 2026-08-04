@@ -20,10 +20,10 @@ import eu.europeana.api.client.search.query.adv.EuropeanaSearchTerm;
 
 public class ComplexSearchIT {
 
-	@Test
-	public void testComplexSearch() throws IOException, EuropeanaApiProblem{
-		
-		 long ms0 = System.currentTimeMillis();
+    @Test
+    public void testComplexSearch() throws IOException, EuropeanaApiProblem{
+        
+         long ms0 = System.currentTimeMillis();
 
          //build a complex query
          EuropeanaOperand opA = new EuropeanaOperand("Shakespeare");
@@ -46,7 +46,7 @@ public class ComplexSearchIT {
          //invoke the search api
          EuropeanaApi2Client europeanaClient = new EuropeanaApi2Client(ApacheHttpConnectors.create());
          final int FECTHED_RESULTS_COUNT = 20;
-		EuropeanaApi2Results res = europeanaClient.searchApi2(europeanaQuery, FECTHED_RESULTS_COUNT, 0);
+        EuropeanaApi2Results res = europeanaClient.searchApi2(europeanaQuery, FECTHED_RESULTS_COUNT, 0);
          
          long t = System.currentTimeMillis() - ms0;
          System.out.println("*** Response time (client + server processing): " + (t / 1000d) + " seconds");
@@ -73,5 +73,5 @@ public class ComplexSearchIT {
                  
              }
          }
-	}
+    }
 }

@@ -61,12 +61,12 @@ public class EuropeanaQuery implements EuropeanaQueryInterface, EuropeanaOperato
      * @param wholeSubQuery
      */
     @Override
-	public void setWholeSubQuery(String wholeSubQuery) {
+    public void setWholeSubQuery(String wholeSubQuery) {
         this.wholeSubQuery = wholeSubQuery;
     }
 
     @Override
-	public String getWholeSubQuery() {
+    public String getWholeSubQuery() {
         return wholeSubQuery;
     }
 
@@ -214,29 +214,29 @@ public class EuropeanaQuery implements EuropeanaQueryInterface, EuropeanaOperato
     
     public String getSearchTerms() {
 
-    	StringBuffer buf = new StringBuffer();
+        StringBuffer buf = new StringBuffer();
         buildSearchQueryString(buf);
         return buf.toString();
     }
 
-	protected void buildSearchQueryString(StringBuffer buf) {
-		
-		if (this.wholeSubQuery != null && this.wholeSubQuery.trim().length() > 0) {
+    protected void buildSearchQueryString(StringBuffer buf) {
+        
+        if (this.wholeSubQuery != null && this.wholeSubQuery.trim().length() > 0) {
             buf.append(this.wholeSubQuery);
         }
-		
-		if(getSubQueries() != null){
-			for (SubQuery subquery : getSubQueries()) {
-				this.addSearchField(buf, subquery.getField(), subquery.getValue(), subquery.isNotQuery(), subquery.isForceQuotes(), subquery.isEncodeValue());
-			}
-		}
-		
+        
+        if(getSubQueries() != null){
+            for (SubQuery subquery : getSubQueries()) {
+                this.addSearchField(buf, subquery.getField(), subquery.getValue(), subquery.isNotQuery(), subquery.isForceQuotes(), subquery.isEncodeValue());
+            }
+        }
+        
         if(this.generalTerms != null)
-        	this.addSearchField(buf, "text", this.generalTerms);
+            this.addSearchField(buf, "text", this.generalTerms);
         
         //TODO: creator <> who ... needs to be corrected ...
         if(this.creator != null)
-        	this.addSearchField(buf, "who", this.creator);
+            this.addSearchField(buf, "who", this.creator);
         
         if(this.title != null)
             this.addSearchField(buf, "title", this.title);
@@ -245,33 +245,33 @@ public class EuropeanaQuery implements EuropeanaQueryInterface, EuropeanaOperato
             this.addSearchField(buf, "date", this.date, false, false, false);//TODO: check if data must be encoded?!
         
         if(this.subject != null)
-        	this.addSearchField(buf, "subject", this.subject);
+            this.addSearchField(buf, "subject", this.subject);
         
         if(this.type != null)
-        	this.addSearchField(buf, "TYPE", this.type, false, false, false);
+            this.addSearchField(buf, "TYPE", this.type, false, false, false);
         
         if(this.dataProvider != null)
-        	this.addSearchField(buf, "DATA_PROVIDER", this.dataProvider, false, true, true);
+            this.addSearchField(buf, "DATA_PROVIDER", this.dataProvider, false, true, true);
         
         if(this.provider != null)
-        	this.addSearchField(buf, "PROVIDER", this.provider, false, true, true);
+            this.addSearchField(buf, "PROVIDER", this.provider, false, true, true);
         
         //TODO: update to subqueries
         if(this.notDataProvider != null)
-        	this.addSearchField(buf, "DATA_PROVIDER", this.notDataProvider, true, true, true);
+            this.addSearchField(buf, "DATA_PROVIDER", this.notDataProvider, true, true, true);
         
         if(this.notProvider != null)
-        	this.addSearchField(buf, "PROVIDER", this.notProvider, true, true, true);
+            this.addSearchField(buf, "PROVIDER", this.notProvider, true, true, true);
         
         if(this.country != null)
-        	this.addSearchField(buf, "COUNTRY", this.country, false, false, false);
+            this.addSearchField(buf, "COUNTRY", this.country, false, false, false);
         
         if(this.language != null)
-        	this.addSearchField(buf, "LANGUAGE", this.language, false, true, false);
+            this.addSearchField(buf, "LANGUAGE", this.language, false, true, false);
         
         if(this.whatTerms != null)
-        	this.addSearchField(buf, "what", this.whatTerms, false, false, true);
-	}
+            this.addSearchField(buf, "what", this.whatTerms, false, false, true);
+    }
 
     public String getQueryUrl(BaseApiConnection connection) throws UnsupportedEncodingException {
         return getQueryUrl(connection, EuropeanaComplexQuery.DEFAULT_OFFSET);
@@ -283,30 +283,30 @@ public class EuropeanaQuery implements EuropeanaQueryInterface, EuropeanaOperato
     
     
     public String getQueryUrl(BaseApiConnection connection, String cursor, int rows) throws UnsupportedEncodingException {
-	   throw new UnsupportedOperationException("Cursor pagination requires Api2Query");
-	}
+       throw new UnsupportedOperationException("Cursor pagination requires Api2Query");
+    }
 
     
     public String getQueryUrl(BaseApiConnection connection, long limit, long offset) throws UnsupportedEncodingException {
-		StringBuilder url = buildBaseSearchUrl(connection);
-		url.append("query=").append(getSearchTerms());
-		if (limit > 0)
-			url.append("&rows=").append(limit);
-		if (offset > 0)
-			url.append("&start=").append(offset);
-		return url.toString();
+        StringBuilder url = buildBaseSearchUrl(connection);
+        url.append("query=").append(getSearchTerms());
+        if (limit > 0)
+            url.append("&rows=").append(limit);
+        if (offset > 0)
+            url.append("&start=").append(offset);
+        return url.toString();
     }
 
-	protected StringBuilder buildBaseSearchUrl(BaseApiConnection connection) {
-		StringBuilder url = new StringBuilder();
-		url.append(connection.getEuropeanaUri());
-		url.append(ClientConfiguration.getInstance().getSearchUrn());
-		url.append("?wskey=").append(connection.getApiKey());
-		if (getProfile() != null)
-			url.append("&profile=").append(getProfile());
-		url.append("&");
-		return url;
-	}
+    protected StringBuilder buildBaseSearchUrl(BaseApiConnection connection) {
+        StringBuilder url = new StringBuilder();
+        url.append(connection.getEuropeanaUri());
+        url.append(ClientConfiguration.getInstance().getSearchUrn());
+        url.append("?wskey=").append(connection.getApiKey());
+        if (getProfile() != null)
+            url.append("&profile=").append(getProfile());
+        url.append("&");
+        return url;
+    }
        
     protected void addSearchField(StringBuffer buf, String field, String value) {
         this.addSearchField(buf, field, value, false, false, true);
@@ -336,18 +336,18 @@ public class EuropeanaQuery implements EuropeanaQueryInterface, EuropeanaOperato
         //TODO: check if the brackets are really needed. In worst case add the boolean forceBrackets parameter
         //TODO: correct this hack 
         if(!"europeana_id".equals(field))
-        	buf.append("(");
+            buf.append("(");
 
         if (forceQuotes && !value.startsWith("\"")) {
             buf.append(encodeSearchValue("\""));
             if(encodeValue)
-            	buf.append(encodeSearchValue(value));
+                buf.append(encodeSearchValue(value));
             else
              buf.append(value);
             buf.append(encodeSearchValue("\""));
         } else {
-        	if(encodeValue)
-            	buf.append(encodeSearchValue(value));
+            if(encodeValue)
+                buf.append(encodeSearchValue(value));
             else
              buf.append(value);
         }
@@ -355,7 +355,7 @@ public class EuropeanaQuery implements EuropeanaQueryInterface, EuropeanaOperato
             buf.append(")");
     }
 
-	/**
+    /**
      * Restricts by provider negatively (not this provider)
      *
      * @param notProvider
@@ -381,40 +381,40 @@ public class EuropeanaQuery implements EuropeanaQueryInterface, EuropeanaOperato
         return notDataProvider;
     }
 
-	public void setWhatTerms(String whatTerms) {
-		this.whatTerms = whatTerms;
-	}
+    public void setWhatTerms(String whatTerms) {
+        this.whatTerms = whatTerms;
+    }
 
-	public String getWhatTerms() {
-		return whatTerms;
-	}
-	
-	protected String encodeSearchValue(String searchValue){
-		try {
-			return URLEncoder.encode(searchValue, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			//actualy should never happen as "UTF-8" is a valid encoding
-			throw new TechnicalRuntimeException("Cannot encode using UTF-8 encoding!", e);
-		}
-	}
+    public String getWhatTerms() {
+        return whatTerms;
+    }
+    
+    protected String encodeSearchValue(String searchValue){
+        try {
+            return URLEncoder.encode(searchValue, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            //actualy should never happen as "UTF-8" is a valid encoding
+            throw new TechnicalRuntimeException("Cannot encode using UTF-8 encoding!", e);
+        }
+    }
 
-	public List<SubQuery> getSubQueries() {
-		return subQueries;
-	}
+    public List<SubQuery> getSubQueries() {
+        return subQueries;
+    }
 
-	public void addSubQuery(SubQuery subQuery) {
-		//this.subQueries = subQueries;
-		if(subQueries == null)
-			subQueries = new ArrayList<SubQuery>(3);
-		
-		subQueries.add(subQuery);
-	}
+    public void addSubQuery(SubQuery subQuery) {
+        //this.subQueries = subQueries;
+        if(subQueries == null)
+            subQueries = new ArrayList<SubQuery>(3);
+        
+        subQueries.add(subQuery);
+    }
 
-	public String getProfile() {
-		return profile;
-	}
+    public String getProfile() {
+        return profile;
+    }
 
-	public void setProfile(String profile) {
-		this.profile = profile;
-	}
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
 }

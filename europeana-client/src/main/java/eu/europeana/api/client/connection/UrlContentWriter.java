@@ -13,5 +13,5 @@ import java.io.OutputStream;
 @FunctionalInterface
 public interface UrlContentWriter {
 
-	boolean write(String url, OutputStream out, String requiredMime) throws IOException;
+    boolean write(String url, OutputStream out, String requiredMime) throws IOException;
 }

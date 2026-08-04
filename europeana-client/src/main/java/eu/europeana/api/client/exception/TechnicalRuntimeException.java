@@ -6,25 +6,25 @@ package eu.europeana.api.client.exception;
  *
  */
 public class TechnicalRuntimeException extends RuntimeException{
-	
-	public TechnicalRuntimeException(String message, Throwable e) {
-		super(message, e);
-	}
+    
+    public TechnicalRuntimeException(String message, Throwable e) {
+        super(message, e);
+    }
 
-	public TechnicalRuntimeException(String message) {
-		super(message);
-	}
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3672999785376920974L;
-	
-	@Override
-	public String getMessage() {
-		if(getCause() == null)
-			return super.getMessage();
-		else			
-			return super.getMessage() + ": " + getCause().getMessage();
-		
-	}
+    public TechnicalRuntimeException(String message) {
+        super(message);
+    }
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3672999785376920974L;
+    
+    @Override
+    public String getMessage() {
+        if(getCause() == null)
+            return super.getMessage();
+        else            
+            return super.getMessage() + ": " + getCause().getMessage();
+        
+    }
 }
