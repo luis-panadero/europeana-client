@@ -6,7 +6,6 @@ Cliente Java del Europeana Search API v2 (`eu.europeana.api.client`). Git root �
 
 - Raíz del repo: `README.md`, `LICENSE.md`, este fichero.
 - Módulo Maven: `europeana-client/` (`groupId` `baratz.es`, `0.3.0-SNAPSHOT`).
-- Ejecutar **todos** los comandos Maven desde `europeana-client/`.
 
 ## Build y toolchain
 

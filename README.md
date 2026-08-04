@@ -33,8 +33,8 @@ The library loads `/europeana-client.properties` from the classpath via `ClientC
 Template:
 
 ```sh
-cp europeana-client/src/main/resources/europeana-client.properties.template \
-   europeana-client/src/test/resources/europeana-client.properties
+cp src/main/resources/europeana-client.properties.template \
+   src/test/resources/europeana-client.properties
 ```
 
 Relevant properties:
@@ -383,7 +383,7 @@ tags = my.parseTagsApiResponse(inputStream);
 
 ## Tests
 
-From `europeana-client/`:
+From root dir :
 
 ```sh
 # Unit tests (Spock, *Spec under src/test/groovy)
