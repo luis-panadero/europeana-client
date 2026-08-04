@@ -77,6 +77,22 @@ pipeline {
           }
       }
     }
+    stage('Unit Testing') {
+      steps {
+          updateGitlabCommitStatus name: 'build', state: 'running'
+
+          lock(resource: "lock-${env.JOB_WITHOUT_BRANCH}") {
+            echo "Bloqueo para el pipeline ${env.JOB_WITHOUT_BRANCH}"
+            withMaven(
+              globalMavenSettingsConfig: '3736bbee-3105-473d-87ea-07657f640551',
+              mavenSettingsConfig: 'f0b67693-f8ff-4403-a48d-6953a3d00e7f',
+              options: [pipelineGraphPublisher(lifecycleThreshold: 'install')]
+            ) {
+              sh "mvn verify -T4 -Dmaven.javadoc.skip=true"
+            }
+          }
+      }
+    }
     stage('Deploy') {
       steps {
           updateGitlabCommitStatus name: 'build', state: 'running'
