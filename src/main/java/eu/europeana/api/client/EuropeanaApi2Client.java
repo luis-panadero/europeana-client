@@ -217,7 +217,8 @@ public class EuropeanaApi2Client extends BaseApiConnection {
 
     protected String buildObjectAccessUrl(String id, String profile) {
         StringBuilder builder = new StringBuilder();
-        builder.append(ClientConfiguration.getInstance().getRecordUri());
+        builder.append(getEuropeanaUri());
+        builder.append(ClientConfiguration.getInstance().getRecordUrn());
         builder.append(id).append(".json");
         builder.append(buildApiKeyParam());
         if (profile != null)

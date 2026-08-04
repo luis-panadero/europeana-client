@@ -11,8 +11,15 @@ public class Proxy {
     private Map<String, List<String>> dcSource;
     private Map<String, List<String>> dcSubject;
     private Map<String, List<String>> dcType;
+    private Map<String, List<String>> dcTitle;
+    private Map<String, List<String>> dcLanguage;
+    private Map<String, List<String>> dcDate;
+    private Map<String, List<String>> dcPublisher;
+    private Map<String, List<String>> dcFormat;
+    private Map<String, List<String>> dcCoverage;
     private Map<String, List<String>> dctermsAlternative;
     private Map<String, List<String>> dctermsCreated;
+    private Map<String, List<String>> dctermsIssued;
     private Map<String, List<String>> dctermsExtent;
     private Map<String, List<String>> dctermsMedium;
     private Map<String, List<String>> dcRelation;
@@ -87,6 +94,54 @@ public class Proxy {
         this.dcType = dcType;
     }
 
+    public Map<String, List<String>> getDcTitle() {
+        return dcTitle;
+    }
+
+    public void setDcTitle(Map<String, List<String>> dcTitle) {
+        this.dcTitle = dcTitle;
+    }
+
+    public Map<String, List<String>> getDcLanguage() {
+        return dcLanguage;
+    }
+
+    public void setDcLanguage(Map<String, List<String>> dcLanguage) {
+        this.dcLanguage = dcLanguage;
+    }
+
+    public Map<String, List<String>> getDcDate() {
+        return dcDate;
+    }
+
+    public void setDcDate(Map<String, List<String>> dcDate) {
+        this.dcDate = dcDate;
+    }
+
+    public Map<String, List<String>> getDcPublisher() {
+        return dcPublisher;
+    }
+
+    public void setDcPublisher(Map<String, List<String>> dcPublisher) {
+        this.dcPublisher = dcPublisher;
+    }
+
+    public Map<String, List<String>> getDcFormat() {
+        return dcFormat;
+    }
+
+    public void setDcFormat(Map<String, List<String>> dcFormat) {
+        this.dcFormat = dcFormat;
+    }
+
+    public Map<String, List<String>> getDcCoverage() {
+        return dcCoverage;
+    }
+
+    public void setDcCoverage(Map<String, List<String>> dcCoverage) {
+        this.dcCoverage = dcCoverage;
+    }
+
     public Map<String, List<String>> getDctermsAlternative() {
         return dctermsAlternative;
     }
@@ -102,6 +157,14 @@ public class Proxy {
 
     public void setDctermsCreated(Map<String, List<String>> dctermsCreated) {
         this.dctermsCreated = dctermsCreated;
+    }
+
+    public Map<String, List<String>> getDctermsIssued() {
+        return dctermsIssued;
+    }
+
+    public void setDctermsIssued(Map<String, List<String>> dctermsIssued) {
+        this.dctermsIssued = dctermsIssued;
     }
 
     public Map<String, List<String>> getDctermsExtent() {

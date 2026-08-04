@@ -6,6 +6,8 @@ public interface EuropeanaApiConfiguration {
 
     public abstract String getRecordUri();
 
+    public abstract String getRecordUrn();
+
     public abstract String getSearchUri();
 
     public abstract String getApiKey();

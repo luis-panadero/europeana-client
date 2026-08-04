@@ -1,0 +1,43 @@
+{
+  "success": true,
+  "object": {
+    "about": "/test/1",
+    "title": ["Sample Europeana Title"],
+    "language": ["spa"],
+    "type": "TEXT",
+    "proxies": [
+      {
+        "about": "/proxy/provider/test/1",
+        "europeanaProxy": false,
+        "edmType": "TEXT",
+        "dcTitle": { "def": ["Sample Europeana Title"] },
+        "dcCreator": { "def": ["Sample Creator"] },
+        "dcSubject": { "def": ["Literature"] },
+        "dcDescription": { "def": ["A sample description"] },
+        "dcLanguage": { "def": ["spa"] },
+        "dcDate": { "def": ["1901"] },
+        "dcPublisher": { "def": ["Sample Publisher"] },
+        "year": { "def": ["1901"] }
+      },
+      {
+        "about": "/proxy/europeana/test/1",
+        "europeanaProxy": true,
+        "edmType": "TEXT"
+      }
+    ],
+    "aggregations": [
+      {
+        "edmIsShownBy": "https://example.org/object.pdf",
+        "edmIsShownAt": "https://example.org/context",
+        "edmObject": "https://example.org/thumb.jpg",
+        "edmProvider": { "def": ["Test Provider"] },
+        "edmDataProvider": { "def": ["Test Data Provider"] },
+        "edmRights": { "def": ["http://creativecommons.org/publicdomain/mark/1.0/"] }
+      }
+    ],
+    "europeanaAggregation": {
+      "edmLandingPage": "https://www.europeana.eu/item/test/1",
+      "edmLanguage": { "def": ["spa"] }
+    }
+  }
+}
